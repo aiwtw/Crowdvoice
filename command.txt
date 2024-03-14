@@ -1,0 +1,1 @@
+python manage.py runsslserver --certificate /workspace/crowds--voices/scs1659282067753_chuanyuefengxinzi.xyz_Nginx/scs1659282067753_chuanyuefengxinzi.xyz_server.crt --key /workspace/crowds-of-voices/scs1659282067753_chuanyuefengxinzi.xyz_Nginx/scs1659282067753_chuanyuefengxinzi.xyz_server.key 0.0.0.0:8000

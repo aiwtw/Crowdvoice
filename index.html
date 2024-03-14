@@ -1,0 +1,3613 @@
+<!DOCTYPE html>
+<html lang="en" data-stencil-build="dkeklw0g" class="plt-desktop md hydrated" mode="md">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Sign Translate</title>
+    <meta name="description" content="Effortless Sign Language Translation with Cutting-Edge Real-Time Models. Translate Sign Language instantly on desktop and mobile.">
+    <meta name="keywords" content="sign language, sign language translation, sign language interpreter, sign language dictionary, sign language translator, sign language app">
+
+    <meta name="author" content="Amit Moryossef">
+
+    <meta name="referrer" content="origin">
+    <style sty-id="sc-ion-app">
+        #input {
+            width: 700px;
+            height: 35px;
+
+            margin-left: 20px;
+            margin-top: 5px;
+            font-size: large;
+            font-weight: 500;
+            line-height: 35px;
+        }
+        #output {
+            width: 700px;
+            height: 35px;
+
+            margin-left: 20px;
+            margin-top: 5px;
+            font-size: large;
+            font-weight: 500;
+            line-height: 35px;
+        }
+        #outputdiv {
+            position: relative;
+            display: flex;
+            margin-left: 30px;
+            margin-top: 30px;
+
+            width: 90%;
+            height: 75%;
+
+            font-size: 20px;
+        }
+        #mid {
+            width: 30px;
+            height: 30px;
+            margin: 10px 10px 5px 10px;
+
+            font-size: 15px;
+        }
+        #text-div {
+            width: 100%;
+        }
+        #buttonContainer {
+            width: 90%;
+            height: 55px;
+        }
+        #cameraButton {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: auto;
+        }
+        #uploadButton {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: inline-block;
+            vertical-align: top;
+
+            margin: auto;
+            margin-left: 30px;
+        }
+        #recordButton {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            vertical-align: top;
+
+            margin: auto;
+            margin-left: 30px;
+            
+            display: none;
+        }
+        #cameraContainer {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 90%;
+            height: 75%;
+            margin-bottom: 10px;
+
+            text-align: center;
+            /* border: 2px solid red; */
+            /* background-color: #0366d6; */
+        }
+        #postButton {
+            position: absolute;
+            right: 0;
+            margin-right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        #soundButton {
+            position: absolute;
+            right: 0;
+            margin-right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+        }
+        #fileInput {
+            display: none;
+        }
+        #logo {
+            height: 70px;
+        }
+        #cameraContainer video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        #upload-img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+        #sound-img {
+            max-height: 100%;
+            max-width: 100%;
+        }
+        #post-img {
+            max-height: 90%;
+            max-width: 90%;          
+        }
+        #left-arrow {
+            max-height: 100%;
+            max-width: 100%;
+        }
+        .sndspan {
+            padding-top: 30px;
+        }
+        .button-with-dot {
+            position: relative;
+            padding-right: 40px; /* 增加按钮右侧的空间以容纳红点 */
+        }
+        #overlayImage {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+            animation: blinkAnimation 1s infinite;
+
+            display: none;
+        }
+        @keyframes blinkAnimation {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        .dot {
+            position: absolute;
+            /* top: 50%; */
+            right: 15px; /* 调整红点的位置 */
+            transform: translate(0, -50%);
+            width: 15px;
+            height: 15px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        html.plt-mobile ion-app {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+        html.plt-mobile ion-app [contenteditable] {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text
+        }
+
+        ion-app.force-statusbar-padding {
+            --ion-safe-area-top: 20px
+        }
+    </style>
+    <style sty-id="sc-ion-header-md">
+        ion-header {
+            display: block;
+            position: relative;
+            -ms-flex-order: -1;
+            order: -1;
+            width: 100%;
+            z-index: 10
+        }
+
+        ion-header ion-toolbar:first-of-type {
+            padding-top: var(--ion-safe-area-top, 0)
+        }
+
+        .header-md {
+            -webkit-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)
+        }
+
+        .header-collapse-condense {
+            display: none
+        }
+
+        .header-md.ion-no-border {
+            -webkit-box-shadow: none;
+            box-shadow: none
+        }
+
+        slot-fb {
+            display: contents
+        }
+
+        slot-fb[hidden] {
+            display: none
+        }
+    </style>
+    <style sty-id="sc-ion-content">
+        /*!@:host*/
+
+        .sc-ion-content-h {
+            --background: var(--ion-background-color, #fff);
+            --color: var(--ion-text-color, #000);
+            --padding-top: 0px;
+            --padding-bottom: 0px;
+            --padding-start: 0px;
+            --padding-end: 0px;
+            --keyboard-offset: 0px;
+            --offset-top: 0px;
+            --offset-bottom: 0px;
+            --overflow: auto;
+            display: block;
+            position: relative;
+            -ms-flex: 1;
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-family: var(--ion-font-family, inherit);
+            contain: size style
+        }
+
+        /*!@:host(.ion-color) .inner-scroll*/
+
+        .ion-color.sc-ion-content-h .inner-scroll.sc-ion-content {
+            background: var(--ion-color-base);
+            color: var(--ion-color-contrast)
+        }
+
+        /*!@:host(.outer-content)*/
+
+        .outer-content.sc-ion-content-h {
+            --background: var(--ion-color-step-50, #f2f2f2)
+        }
+
+        /*!@#background-content*/
+
+        #background-content.sc-ion-content {
+            left: 0px;
+            right: 0px;
+            top: calc(var(--offset-top) * -1);
+            bottom: calc(var(--offset-bottom) * -1);
+            position: absolute;
+            background: var(--background)
+        }
+
+        /*!@.inner-scroll*/
+
+        .inner-scroll.sc-ion-content {
+            left: 0px;
+            right: 0px;
+            top: calc(var(--offset-top) * -1);
+            bottom: calc(var(--offset-bottom) * -1);
+            -webkit-padding-start: var(--padding-start);
+            padding-inline-start: var(--padding-start);
+            -webkit-padding-end: var(--padding-end);
+            padding-inline-end: var(--padding-end);
+            padding-top: calc(var(--padding-top) + var(--offset-top));
+            padding-bottom: calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom));
+            position: absolute;
+            color: var(--color);
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            overflow: hidden;
+            -ms-touch-action: pan-x pan-y pinch-zoom;
+            touch-action: pan-x pan-y pinch-zoom
+        }
+
+        /*!@.scroll-y,
+.scroll-x*/
+
+        .scroll-y.sc-ion-content,
+        .scroll-x.sc-ion-content {
+            -webkit-overflow-scrolling: touch;
+            z-index: 0;
+            will-change: scroll-position
+        }
+
+        /*!@.scroll-y*/
+
+        .scroll-y.sc-ion-content {
+            overflow-y: var(--overflow);
+            overscroll-behavior-y: contain
+        }
+
+        /*!@.scroll-x*/
+
+        .scroll-x.sc-ion-content {
+            overflow-x: var(--overflow);
+            overscroll-behavior-x: contain
+        }
+
+        /*!@.overscroll::before,
+.overscroll::after*/
+
+        .overscroll.sc-ion-content::before,
+        .overscroll.sc-ion-content::after {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            content: ""
+        }
+
+        /*!@.overscroll::before*/
+
+        .overscroll.sc-ion-content::before {
+            bottom: -1px
+        }
+
+        /*!@.overscroll::after*/
+
+        .overscroll.sc-ion-content::after {
+            top: -1px
+        }
+
+        /*!@:host(.content-sizing)*/
+
+        .content-sizing.sc-ion-content-h {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-height: 0;
+            contain: none
+        }
+
+        /*!@:host(.content-sizing) .inner-scroll*/
+
+        .content-sizing.sc-ion-content-h .inner-scroll.sc-ion-content {
+            position: relative;
+            top: 0;
+            bottom: 0;
+            margin-top: calc(var(--offset-top) * -1);
+            margin-bottom: calc(var(--offset-bottom) * -1)
+        }
+
+        /*!@.transition-effect*/
+
+        .transition-effect.sc-ion-content {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            opacity: 0;
+            pointer-events: none
+        }
+
+        /*!@:host(.content-ltr) .transition-effect*/
+
+        .content-ltr.sc-ion-content-h .transition-effect.sc-ion-content {
+            left: -100%
+        }
+
+        /*!@:host(.content-rtl) .transition-effect*/
+
+        .content-rtl.sc-ion-content-h .transition-effect.sc-ion-content {
+            right: -100%
+        }
+
+        /*!@.transition-cover*/
+
+        .transition-cover.sc-ion-content {
+            position: absolute;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            opacity: 0.1
+        }
+
+        /*!@.transition-shadow*/
+
+        .transition-shadow.sc-ion-content {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-box-shadow: inset -9px 0 9px 0 rgba(0, 0, 100, 0.03);
+            box-shadow: inset -9px 0 9px 0 rgba(0, 0, 100, 0.03)
+        }
+
+        /*!@:host(.content-ltr) .transition-shadow*/
+
+        .content-ltr.sc-ion-content-h .transition-shadow.sc-ion-content {
+            right: 0
+        }
+
+        /*!@:host(.content-rtl) .transition-shadow*/
+
+        .content-rtl.sc-ion-content-h .transition-shadow.sc-ion-content {
+            left: 0;
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1)
+        }
+
+        /*!@::slotted([slot=fixed])*/
+
+        .sc-ion-content-s>[slot=fixed] {
+            position: absolute;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0)
+        }
+    </style>
+    <style sty-id="sc-ion-tab-bar-md">
+        /*!@:host*/
+
+        .sc-ion-tab-bar-md-h {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            width: auto;
+            padding-right: var(--ion-safe-area-right);
+            padding-bottom: var(--ion-safe-area-bottom, 0);
+            padding-left: var(--ion-safe-area-left);
+            border-top: var(--border);
+            background: var(--background);
+            color: var(--color);
+            text-align: center;
+            contain: strict;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            z-index: 10;
+            -webkit-box-sizing: content-box !important;
+            box-sizing: content-box !important
+        }
+
+        /*!@:host(.ion-color) ::slotted(ion-tab-button)*/
+
+        .sc-ion-tab-bar-md-h.ion-color.sc-ion-tab-bar-md-s>ion-tab-button,
+        .sc-ion-tab-bar-md-h.ion-color .sc-ion-tab-bar-md-s>ion-tab-button {
+            --background-focused: var(--ion-color-shade);
+            --color-selected: var(--ion-color-contrast)
+        }
+
+        /*!@:host(.ion-color) ::slotted(.tab-selected)*/
+
+        .sc-ion-tab-bar-md-h.ion-color .sc-ion-tab-bar-md-s>.tab-selected {
+            color: var(--ion-color-contrast)
+        }
+
+        /*!@:host(.ion-color),
+:host(.ion-color) ::slotted(ion-tab-button)*/
+
+        .ion-color.sc-ion-tab-bar-md-h,
+        .sc-ion-tab-bar-md-h.ion-color.sc-ion-tab-bar-md-s>ion-tab-button,
+        .sc-ion-tab-bar-md-h.ion-color .sc-ion-tab-bar-md-s>ion-tab-button {
+            color: rgba(var(--ion-color-contrast-rgb), 0.7)
+        }
+
+        /*!@:host(.ion-color),
+:host(.ion-color) ::slotted(ion-tab-button)*/
+
+        .ion-color.sc-ion-tab-bar-md-h,
+        .sc-ion-tab-bar-md-h.ion-color.sc-ion-tab-bar-md-s>ion-tab-button,
+        .sc-ion-tab-bar-md-h.ion-color .sc-ion-tab-bar-md-s>ion-tab-button {
+            background: var(--ion-color-base)
+        }
+
+        /*!@:host(.ion-color) ::slotted(ion-tab-button.ion-focused),
+:host(.tab-bar-translucent) ::slotted(ion-tab-button.ion-focused)*/
+
+        .sc-ion-tab-bar-md-h.ion-color.sc-ion-tab-bar-md-s>ion-tab-button,
+        .sc-ion-tab-bar-md-h.ion-color .sc-ion-tab-bar-md-s>ion-tab-button.ion-focused,
+        .sc-ion-tab-bar-md-h.tab-bar-translucent.sc-ion-tab-bar-md-s>ion-tab-button.ion-focused,
+        .sc-ion-tab-bar-md-h.tab-bar-translucent .sc-ion-tab-bar-md-s>ion-tab-button.ion-focused {
+            background: var(--background-focused)
+        }
+
+        /*!@:host(.tab-bar-translucent) ::slotted(ion-tab-button)*/
+
+        .sc-ion-tab-bar-md-h.tab-bar-translucent .sc-ion-tab-bar-md-s>ion-tab-button {
+            background: transparent
+        }
+
+        /*!@:host([slot=top])*/
+
+        [slot=top].sc-ion-tab-bar-md-h {
+            padding-top: var(--ion-safe-area-top, 0);
+            padding-bottom: 0;
+            border-top: 0;
+            border-bottom: var(--border)
+        }
+
+        /*!@:host(.tab-bar-hidden)*/
+
+        .tab-bar-hidden.sc-ion-tab-bar-md-h {
+            display: none !important
+        }
+
+        /*!@:host*/
+
+        .sc-ion-tab-bar-md-h {
+            --background: var(--ion-tab-bar-background, var(--ion-background-color, #fff));
+            --background-focused: var(--ion-tab-bar-background-focused, #e0e0e0);
+            --border: 1px solid var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 0.07))));
+            --color: var(--ion-tab-bar-color, var(--ion-color-step-650, #595959));
+            --color-selected: var(--ion-tab-bar-color-selected, var(--ion-color-primary, #3880ff));
+            height: 56px
+        }
+    </style>
+    <style sty-id="sc-ion-toolbar-md">
+        /*!@:host*/
+
+        .sc-ion-toolbar-md-h {
+            --border-width: 0;
+            --border-style: solid;
+            --opacity: 1;
+            --opacity-scale: 1;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: block;
+            position: relative;
+            width: 100%;
+            padding-right: var(--ion-safe-area-right);
+            padding-left: var(--ion-safe-area-left);
+            color: var(--color);
+            font-family: var(--ion-font-family, inherit);
+            contain: content;
+            z-index: 10;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        /*!@:host(.ion-color)*/
+
+        .ion-color.sc-ion-toolbar-md-h {
+            color: var(--ion-color-contrast)
+        }
+
+        /*!@:host(.ion-color) .toolbar-background*/
+
+        .ion-color.sc-ion-toolbar-md-h .toolbar-background.sc-ion-toolbar-md {
+            background: var(--ion-color-base)
+        }
+
+        /*!@.toolbar-container*/
+
+        .toolbar-container.sc-ion-toolbar-md {
+            -webkit-padding-start: var(--padding-start);
+            padding-inline-start: var(--padding-start);
+            -webkit-padding-end: var(--padding-end);
+            padding-inline-end: var(--padding-end);
+            padding-top: var(--padding-top);
+            padding-bottom: var(--padding-bottom);
+            display: -ms-flexbox;
+            display: flex;
+            position: relative;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            width: 100%;
+            min-height: var(--min-height);
+            contain: content;
+            overflow: hidden;
+            z-index: 10;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        /*!@.toolbar-background*/
+
+        .toolbar-background.sc-ion-toolbar-md {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            border-width: var(--border-width);
+            border-style: var(--border-style);
+            border-color: var(--border-color);
+            background: var(--background);
+            contain: strict;
+            opacity: calc(var(--opacity) * var(--opacity-scale));
+            z-index: -1;
+            pointer-events: none
+        }
+
+        /*!@::slotted(ion-progress-bar)*/
+
+        .sc-ion-toolbar-md-s>ion-progress-bar {
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: absolute
+        }
+
+        /*!@:host*/
+
+        .sc-ion-toolbar-md-h {
+            --background: var(--ion-toolbar-background, var(--ion-background-color, #fff));
+            --color: var(--ion-toolbar-color, var(--ion-text-color, #424242));
+            --border-color: var(--ion-toolbar-border-color, var(--ion-border-color, var(--ion-color-step-150, #c1c4cd)));
+            --padding-top: 0;
+            --padding-bottom: 0;
+            --padding-start: 0;
+            --padding-end: 0;
+            --min-height: 56px
+        }
+
+        /*!@.toolbar-content*/
+
+        .toolbar-content.sc-ion-toolbar-md {
+            -ms-flex: 1;
+            flex: 1;
+            -ms-flex-order: 3;
+            order: 3;
+            min-width: 0;
+            max-width: 100%
+        }
+
+        /*!@::slotted(.buttons-first-slot)*/
+
+        .sc-ion-toolbar-md-s>.buttons-first-slot {
+            -webkit-margin-start: 4px;
+            margin-inline-start: 4px
+        }
+
+        /*!@::slotted(.buttons-last-slot)*/
+
+        .sc-ion-toolbar-md-s>.buttons-last-slot {
+            -webkit-margin-end: 4px;
+            margin-inline-end: 4px
+        }
+
+        /*!@::slotted([slot=start])*/
+
+        .sc-ion-toolbar-md-s>[slot=start] {
+            -ms-flex-order: 2;
+            order: 2
+        }
+
+        /*!@::slotted([slot=secondary])*/
+
+        .sc-ion-toolbar-md-s>[slot=secondary] {
+            -ms-flex-order: 4;
+            order: 4
+        }
+
+        /*!@::slotted([slot=primary])*/
+
+        .sc-ion-toolbar-md-s>[slot=primary] {
+            -ms-flex-order: 5;
+            order: 5;
+            text-align: end
+        }
+
+        /*!@::slotted([slot=end])*/
+
+        .sc-ion-toolbar-md-s>[slot=end] {
+            -ms-flex-order: 6;
+            order: 6;
+            text-align: end
+        }
+    </style>
+    <style sty-id="sc-ion-button-md">
+        /*!@:host*/
+
+        .sc-ion-button-md-h {
+            --overflow: hidden;
+            --ripple-color: currentColor;
+            --border-width: initial;
+            --border-color: initial;
+            --border-style: initial;
+            --color-activated: var(--color);
+            --color-focused: var(--color);
+            --color-hover: var(--color);
+            --box-shadow: none;
+            display: inline-block;
+            width: auto;
+            color: var(--color);
+            font-family: var(--ion-font-family, inherit);
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            vertical-align: top;
+            vertical-align: -webkit-baseline-middle;
+            -webkit-font-kerning: none;
+            font-kerning: none
+        }
+
+        /*!@:host(.button-disabled)*/
+
+        .button-disabled.sc-ion-button-md-h {
+            cursor: default;
+            opacity: 0.5;
+            pointer-events: none
+        }
+
+        /*!@:host(.button-solid)*/
+
+        .button-solid.sc-ion-button-md-h {
+            --background: var(--ion-color-primary, #3880ff);
+            --color: var(--ion-color-primary-contrast, #fff)
+        }
+
+        /*!@:host(.button-outline)*/
+
+        .button-outline.sc-ion-button-md-h {
+            --border-color: var(--ion-color-primary, #3880ff);
+            --background: transparent;
+            --color: var(--ion-color-primary, #3880ff)
+        }
+
+        /*!@:host(.button-clear)*/
+
+        .button-clear.sc-ion-button-md-h {
+            --border-width: 0;
+            --background: transparent;
+            --color: var(--ion-color-primary, #3880ff)
+        }
+
+        /*!@:host(.button-block)*/
+
+        .button-block.sc-ion-button-md-h {
+            display: block
+        }
+
+        /*!@:host(.button-block) .button-native*/
+
+        .button-block.sc-ion-button-md-h .button-native.sc-ion-button-md {
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+            clear: both;
+            contain: content
+        }
+
+        /*!@:host(.button-block) .button-native::after*/
+
+        .button-block.sc-ion-button-md-h .button-native.sc-ion-button-md::after {
+            clear: both
+        }
+
+        /*!@:host(.button-full)*/
+
+        .button-full.sc-ion-button-md-h {
+            display: block
+        }
+
+        /*!@:host(.button-full) .button-native*/
+
+        .button-full.sc-ion-button-md-h .button-native.sc-ion-button-md {
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+            contain: content
+        }
+
+        /*!@:host(.button-full:not(.button-round)) .button-native*/
+
+        .button-full.sc-ion-button-md-h:not(.button-round) .button-native.sc-ion-button-md {
+            border-radius: 0;
+            border-right-width: 0;
+            border-left-width: 0
+        }
+
+        /*!@.button-native*/
+
+        .button-native.sc-ion-button-md {
+            border-radius: var(--border-radius);
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            -webkit-padding-start: var(--padding-start);
+            padding-inline-start: var(--padding-start);
+            -webkit-padding-end: var(--padding-end);
+            padding-inline-end: var(--padding-end);
+            padding-top: var(--padding-top);
+            padding-bottom: var(--padding-bottom);
+            font-family: inherit;
+            font-size: inherit;
+            font-style: inherit;
+            font-weight: inherit;
+            letter-spacing: inherit;
+            text-decoration: inherit;
+            text-indent: inherit;
+            text-overflow: inherit;
+            text-transform: inherit;
+            text-align: inherit;
+            white-space: inherit;
+            color: inherit;
+            display: -ms-flexbox;
+            display: flex;
+            position: relative;
+            -ms-flex-align: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            -webkit-transition: var(--transition);
+            transition: var(--transition);
+            border-width: var(--border-width);
+            border-style: var(--border-style);
+            border-color: var(--border-color);
+            outline: none;
+            background: var(--background);
+            line-height: 1;
+            -webkit-box-shadow: var(--box-shadow);
+            box-shadow: var(--box-shadow);
+            contain: layout style;
+            cursor: pointer;
+            opacity: var(--opacity);
+            overflow: var(--overflow);
+            z-index: 0;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none
+        }
+
+        /*!@.button-native::-moz-focus-inner*/
+
+        .button-native.sc-ion-button-md::-moz-focus-inner {
+            border: 0
+        }
+
+        /*!@.button-inner*/
+
+        .button-inner.sc-ion-button-md {
+            display: -ms-flexbox;
+            display: flex;
+            position: relative;
+            -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            z-index: 1
+        }
+
+        /*!@::slotted([slot=start]),
+::slotted([slot=end])*/
+
+        .sc-ion-button-md-s>[slot=start],
+        .sc-ion-button-md-s>[slot=end] {
+            -ms-flex-negative: 0;
+            flex-shrink: 0
+        }
+
+        /*!@::slotted(ion-icon)*/
+
+        .sc-ion-button-md-s>ion-icon {
+            font-size: 1.35em;
+            pointer-events: none
+        }
+
+        /*!@::slotted(ion-icon[slot=start])*/
+
+        .sc-ion-button-md-s>ion-icon[slot=start] {
+            -webkit-margin-start: -0.3em;
+            margin-inline-start: -0.3em;
+            -webkit-margin-end: 0.3em;
+            margin-inline-end: 0.3em;
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        /*!@::slotted(ion-icon[slot=end])*/
+
+        .sc-ion-button-md-s>ion-icon[slot=end] {
+            -webkit-margin-start: 0.3em;
+            margin-inline-start: 0.3em;
+            -webkit-margin-end: -0.2em;
+            margin-inline-end: -0.2em;
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        /*!@::slotted(ion-icon[slot=icon-only])*/
+
+        .sc-ion-button-md-s>ion-icon[slot=icon-only] {
+            font-size: 1.8em
+        }
+
+        /*!@ion-ripple-effect*/
+
+        ion-ripple-effect.sc-ion-button-md {
+            color: var(--ripple-color)
+        }
+
+        /*!@.button-native::after*/
+
+        .button-native.sc-ion-button-md::after {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            content: "";
+            opacity: 0
+        }
+
+        /*!@:host(.ion-focused)*/
+
+        .ion-focused.sc-ion-button-md-h {
+            color: var(--color-focused)
+        }
+
+        /*!@:host(.ion-focused) .button-native::after*/
+
+        .ion-focused.sc-ion-button-md-h .button-native.sc-ion-button-md::after {
+            background: var(--background-focused);
+            opacity: var(--background-focused-opacity)
+        }
+
+        @media (any-hover: hover) {
+            /*!@:host(:hover)*/
+            .sc-ion-button-md-h:hover {
+                color: var(--color-hover)
+            }
+            /*!@:host(:hover) .button-native::after*/
+            .sc-ion-button-md-h:hover .button-native.sc-ion-button-md::after {
+                background: var(--background-hover);
+                opacity: var(--background-hover-opacity)
+            }
+        }
+
+        /*!@:host(.ion-activated)*/
+
+        .ion-activated.sc-ion-button-md-h {
+            color: var(--color-activated)
+        }
+
+        /*!@:host(.ion-activated) .button-native::after*/
+
+        .ion-activated.sc-ion-button-md-h .button-native.sc-ion-button-md::after {
+            background: var(--background-activated);
+            opacity: var(--background-activated-opacity)
+        }
+
+        /*!@:host(.button-solid.ion-color) .button-native*/
+
+        .button-solid.ion-color.sc-ion-button-md-h .button-native.sc-ion-button-md {
+            background: var(--ion-color-base);
+            color: var(--ion-color-contrast)
+        }
+
+        /*!@:host(.button-outline.ion-color) .button-native*/
+
+        .button-outline.ion-color.sc-ion-button-md-h .button-native.sc-ion-button-md {
+            border-color: var(--ion-color-base);
+            background: transparent;
+            color: var(--ion-color-base)
+        }
+
+        /*!@:host(.button-clear.ion-color) .button-native*/
+
+        .button-clear.ion-color.sc-ion-button-md-h .button-native.sc-ion-button-md {
+            background: transparent;
+            color: var(--ion-color-base)
+        }
+
+        /*!@:host(.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native*/
+
+        .in-toolbar.sc-ion-button-md-h:not(.ion-color):not(.in-toolbar-color) .button-native.sc-ion-button-md {
+            color: var(--ion-toolbar-color, var(--color))
+        }
+
+        /*!@:host(.button-outline.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native*/
+
+        .button-outline.in-toolbar.sc-ion-button-md-h:not(.ion-color):not(.in-toolbar-color) .button-native.sc-ion-button-md {
+            border-color: var(--ion-toolbar-color, var(--color, var(--border-color)))
+        }
+
+        /*!@:host(.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native*/
+
+        .button-solid.in-toolbar.sc-ion-button-md-h:not(.ion-color):not(.in-toolbar-color) .button-native.sc-ion-button-md {
+            background: var(--ion-toolbar-color, var(--background));
+            color: var(--ion-toolbar-background, var(--color))
+        }
+
+        /*!@:host(.button-outline.ion-activated.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native*/
+
+        .button-outline.ion-activated.in-toolbar.sc-ion-button-md-h:not(.ion-color):not(.in-toolbar-color) .button-native.sc-ion-button-md {
+            background: var(--ion-toolbar-color, var(--color));
+            color: var(--ion-toolbar-background, var(--background), var(--ion-color-primary-contrast, #fff))
+        }
+
+        /*!@:host*/
+
+        .sc-ion-button-md-h {
+            --border-radius: 4px;
+            --padding-top: 8px;
+            --padding-bottom: 8px;
+            --padding-start: 1.1em;
+            --padding-end: 1.1em;
+            --transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), background-color 15ms linear, color 15ms linear;
+            -webkit-margin-start: 2px;
+            margin-inline-start: 2px;
+            -webkit-margin-end: 2px;
+            margin-inline-end: 2px;
+            margin-top: 4px;
+            margin-bottom: 4px;
+            min-height: 36px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase
+        }
+
+        /*!@:host(.button-solid)*/
+
+        .button-solid.sc-ion-button-md-h {
+            --background-activated: transparent;
+            --background-hover: var(--ion-color-primary-contrast, #fff);
+            --background-focused: var(--ion-color-primary-contrast, #fff);
+            --background-activated-opacity: 0;
+            --background-focused-opacity: .24;
+            --background-hover-opacity: .08;
+            --box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)
+        }
+
+        /*!@:host(.button-solid.ion-activated)*/
+
+        .button-solid.ion-activated.sc-ion-button-md-h {
+            --box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12)
+        }
+
+        /*!@:host(.button-outline)*/
+
+        .button-outline.sc-ion-button-md-h {
+            --border-width: 2px;
+            --border-style: solid;
+            --box-shadow: none;
+            --background-activated: transparent;
+            --background-focused: var(--ion-color-primary, #3880ff);
+            --background-hover: var(--ion-color-primary, #3880ff);
+            --background-activated-opacity: 0;
+            --background-focused-opacity: .12;
+            --background-hover-opacity: .04
+        }
+
+        /*!@:host(.button-outline.ion-activated.ion-color) .button-native*/
+
+        .button-outline.ion-activated.ion-color.sc-ion-button-md-h .button-native.sc-ion-button-md {
+            background: transparent
+        }
+
+        /*!@:host(.button-clear)*/
+
+        .button-clear.sc-ion-button-md-h {
+            --background-activated: transparent;
+            --background-focused: var(--ion-color-primary, #3880ff);
+            --background-hover: var(--ion-color-primary, #3880ff);
+            --background-activated-opacity: 0;
+            --background-focused-opacity: .12;
+            --background-hover-opacity: .04
+        }
+
+        /*!@:host(.button-round)*/
+
+        .button-round.sc-ion-button-md-h {
+            --border-radius: 64px;
+            --padding-top: 0;
+            --padding-start: 26px;
+            --padding-end: 26px;
+            --padding-bottom: 0
+        }
+
+        /*!@:host(.button-large)*/
+
+        .button-large.sc-ion-button-md-h {
+            --padding-top: 14px;
+            --padding-start: 1em;
+            --padding-end: 1em;
+            --padding-bottom: 14px;
+            min-height: 2.8em;
+            font-size: 1.25rem
+        }
+
+        /*!@:host(.button-small)*/
+
+        .button-small.sc-ion-button-md-h {
+            --padding-top: 4px;
+            --padding-start: 0.9em;
+            --padding-end: 0.9em;
+            --padding-bottom: 4px;
+            min-height: 2.1em;
+            font-size: 0.8125rem
+        }
+
+        /*!@:host(.button-has-icon-only)*/
+
+        .button-has-icon-only.sc-ion-button-md-h {
+            --padding-top: 0;
+            --padding-bottom: 0
+        }
+
+        /*!@:host(.button-strong)*/
+
+        .button-strong.sc-ion-button-md-h {
+            font-weight: bold
+        }
+
+        /*!@::slotted(ion-icon[slot=icon-only])*/
+
+        .sc-ion-button-md-s>ion-icon[slot=icon-only] {
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: 0;
+            padding-bottom: 0
+        }
+
+        /*!@:host(.button-solid.ion-color.ion-focused) .button-native::after*/
+
+        .button-solid.ion-color.ion-focused.sc-ion-button-md-h .button-native.sc-ion-button-md::after {
+            background: var(--ion-color-contrast)
+        }
+
+        /*!@:host(.button-clear.ion-color.ion-focused) .button-native::after,
+:host(.button-outline.ion-color.ion-focused) .button-native::after*/
+
+        .button-clear.ion-color.ion-focused.sc-ion-button-md-h .button-native.sc-ion-button-md::after,
+        .button-outline.ion-color.ion-focused.sc-ion-button-md-h .button-native.sc-ion-button-md::after {
+            background: var(--ion-color-base)
+        }
+
+        @media (any-hover: hover) {
+            /*!@:host(.button-solid.ion-color:hover) .button-native::after*/
+            .button-solid.ion-color.sc-ion-button-md-h:hover .button-native.sc-ion-button-md::after {
+                background: var(--ion-color-contrast)
+            }
+            /*!@:host(.button-clear.ion-color:hover) .button-native::after,
+  :host(.button-outline.ion-color:hover) .button-native::after*/
+            .button-clear.ion-color.sc-ion-button-md-h:hover .button-native.sc-ion-button-md::after,
+            .button-outline.ion-color.sc-ion-button-md-h:hover .button-native.sc-ion-button-md::after {
+                background: var(--ion-color-base)
+            }
+        }
+    </style>
+    <style sty-id="sc-ion-tab-button-md">
+        /*!@:host*/
+
+        .sc-ion-tab-button-md-h {
+            --ripple-color: var(--color-selected);
+            --background-focused-opacity: 1;
+            -ms-flex: 1;
+            flex: 1;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            height: 100%;
+            outline: none;
+            background: var(--background);
+            color: var(--color)
+        }
+
+        /*!@.button-native*/
+
+        .button-native.sc-ion-tab-button-md {
+            border-radius: inherit;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            -webkit-padding-start: var(--padding-start);
+            padding-inline-start: var(--padding-start);
+            -webkit-padding-end: var(--padding-end);
+            padding-inline-end: var(--padding-end);
+            padding-top: var(--padding-top);
+            padding-bottom: var(--padding-bottom);
+            font-family: inherit;
+            font-size: inherit;
+            font-style: inherit;
+            font-weight: inherit;
+            letter-spacing: inherit;
+            text-decoration: inherit;
+            text-indent: inherit;
+            text-overflow: inherit;
+            text-transform: inherit;
+            text-align: inherit;
+            white-space: inherit;
+            color: inherit;
+            display: -ms-flexbox;
+            display: flex;
+            position: relative;
+            -ms-flex-direction: inherit;
+            flex-direction: inherit;
+            -ms-flex-align: inherit;
+            align-items: inherit;
+            -ms-flex-pack: inherit;
+            justify-content: inherit;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            outline: none;
+            background: transparent;
+            text-decoration: none;
+            cursor: pointer;
+            overflow: hidden;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-user-drag: none
+        }
+
+        /*!@.button-native::after*/
+
+        .button-native.sc-ion-tab-button-md::after {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            content: "";
+            opacity: 0
+        }
+
+        /*!@.button-inner*/
+
+        .button-inner.sc-ion-tab-button-md {
+            display: -ms-flexbox;
+            display: flex;
+            position: relative;
+            -ms-flex-flow: inherit;
+            flex-flow: inherit;
+            -ms-flex-align: inherit;
+            align-items: inherit;
+            -ms-flex-pack: inherit;
+            justify-content: inherit;
+            width: 100%;
+            height: 100%;
+            z-index: 1
+        }
+
+        /*!@:host(.ion-focused) .button-native*/
+
+        .ion-focused.sc-ion-tab-button-md-h .button-native.sc-ion-tab-button-md {
+            color: var(--color-focused)
+        }
+
+        /*!@:host(.ion-focused) .button-native::after*/
+
+        .ion-focused.sc-ion-tab-button-md-h .button-native.sc-ion-tab-button-md::after {
+            background: var(--background-focused);
+            opacity: var(--background-focused-opacity)
+        }
+
+        @media (any-hover: hover) {
+            /*!@a:hover*/
+            a.sc-ion-tab-button-md:hover {
+                color: var(--color-selected)
+            }
+        }
+
+        /*!@:host(.tab-selected)*/
+
+        .tab-selected.sc-ion-tab-button-md-h {
+            color: var(--color-selected)
+        }
+
+        /*!@:host(.tab-hidden)*/
+
+        .tab-hidden.sc-ion-tab-button-md-h {
+            display: none !important
+        }
+
+        /*!@:host(.tab-disabled)*/
+
+        .tab-disabled.sc-ion-tab-button-md-h {
+            pointer-events: none;
+            opacity: 0.4
+        }
+
+        /*!@::slotted(ion-label),
+::slotted(ion-icon)*/
+
+        .sc-ion-tab-button-md-s>ion-label,
+        .sc-ion-tab-button-md-s>ion-icon {
+            display: block;
+            -ms-flex-item-align: center;
+            align-self: center;
+            max-width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        /*!@::slotted(ion-label)*/
+
+        .sc-ion-tab-button-md-s>ion-label {
+            -ms-flex-order: 0;
+            order: 0
+        }
+
+        /*!@::slotted(ion-icon)*/
+
+        .sc-ion-tab-button-md-s>ion-icon {
+            -ms-flex-order: -1;
+            order: -1;
+            height: 1em
+        }
+
+        /*!@:host(.tab-has-label-only) ::slotted(ion-label)*/
+
+        .sc-ion-tab-button-md-h.tab-has-label-only.sc-ion-tab-button-md-s>ion-label,
+        .sc-ion-tab-button-md-h.tab-has-label-only .sc-ion-tab-button-md-s>ion-label {
+            white-space: normal
+        }
+
+        /*!@::slotted(ion-badge)*/
+
+        .sc-ion-tab-button-md-s>ion-badge {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            position: absolute;
+            z-index: 1
+        }
+
+        /*!@:host(.tab-layout-icon-start)*/
+
+        .tab-layout-icon-start.sc-ion-tab-button-md-h {
+            -ms-flex-direction: row;
+            flex-direction: row
+        }
+
+        /*!@:host(.tab-layout-icon-end)*/
+
+        .tab-layout-icon-end.sc-ion-tab-button-md-h {
+            -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse
+        }
+
+        /*!@:host(.tab-layout-icon-bottom)*/
+
+        .tab-layout-icon-bottom.sc-ion-tab-button-md-h {
+            -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse
+        }
+
+        /*!@:host(.tab-layout-icon-hide) ::slotted(ion-icon)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-hide .sc-ion-tab-button-md-s>ion-icon {
+            display: none
+        }
+
+        /*!@:host(.tab-layout-label-hide) ::slotted(ion-label)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-label-hide .sc-ion-tab-button-md-s>ion-label {
+            display: none
+        }
+
+        /*!@ion-ripple-effect*/
+
+        ion-ripple-effect.sc-ion-tab-button-md {
+            color: var(--ripple-color)
+        }
+
+        /*!@:host*/
+
+        .sc-ion-tab-button-md-h {
+            --padding-top: 0;
+            --padding-end: 12px;
+            --padding-bottom: 0;
+            --padding-start: 12px;
+            max-width: 168px;
+            font-size: 12px;
+            font-weight: normal;
+            letter-spacing: 0.03em
+        }
+
+        /*!@::slotted(ion-label)*/
+
+        .sc-ion-tab-button-md-s>ion-label {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            text-transform: none
+        }
+
+        /*!@::slotted(ion-icon)*/
+
+        .sc-ion-tab-button-md-s>ion-icon {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            -webkit-transform-origin: center center;
+            transform-origin: center center;
+            font-size: 22px
+        }
+
+        /*!@:host-context([dir=rtl]) ::slotted(ion-icon)*/
+
+        .sc-ion-tab-button-md-h[dir=rtl] .sc-ion-tab-button-md-s>ion-icon,
+        [dir=rtl] .sc-ion-tab-button-md-h.sc-ion-tab-button-md-s>ion-icon,
+        [dir=rtl] .sc-ion-tab-button-md-h .sc-ion-tab-button-md-s>ion-icon {
+            -webkit-transform-origin: calc(100% - center) center;
+            transform-origin: calc(100% - center) center
+        }
+
+        /*!@[dir=rtl] ::slotted(ion-icon)*/
+
+        [dir=rtl] .sc-ion-tab-button-md-s>ion-icon {
+            -webkit-transform-origin: calc(100% - center) center;
+            transform-origin: calc(100% - center) center
+        }
+
+        @supports selector(:dir(rtl)) {
+            /*!@::slotted(ion-icon):dir(rtl)*/
+            .sc-ion-tab-button-md-s>ion-icon:dir(rtl) {
+                -webkit-transform-origin: calc(100% - center) center;
+                transform-origin: calc(100% - center) center
+            }
+        }
+
+        /*!@::slotted(ion-badge)*/
+
+        .sc-ion-tab-button-md-s>ion-badge {
+            border-radius: 8px;
+            -webkit-padding-start: 2px;
+            padding-inline-start: 2px;
+            -webkit-padding-end: 2px;
+            padding-inline-end: 2px;
+            padding-top: 3px;
+            padding-bottom: 2px;
+            top: 8px;
+            min-width: 12px;
+            font-size: 8px;
+            font-weight: normal
+        }
+
+        @supports (inset-inline-start: 0) {
+            /*!@::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-s>ion-badge {
+                inset-inline-start: calc(50% + 6px)
+            }
+        }
+
+        @supports not (inset-inline-start: 0) {
+            /*!@::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-s>ion-badge {
+                left: calc(50% + 6px)
+            }
+            /*!@:host-context([dir=rtl]) ::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-h[dir=rtl] .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h .sc-ion-tab-button-md-s>ion-badge {
+                left: unset;
+                right: unset;
+                right: calc(50% + 6px)
+            }
+            /*!@[dir=rtl] ::slotted(ion-badge)*/
+            [dir=rtl] .sc-ion-tab-button-md-s>ion-badge {
+                left: unset;
+                right: unset;
+                right: calc(50% + 6px)
+            }
+            /*!@@supports selector(:dir(rtl))*/
+            @supports .sc-ion-tab-button-md selector(.sc-ion-tab-button-md:dir(rtl)) {
+                .sc-ion-tab-button-md-s>ion-badge:dir(rtl) {
+                    left: unset;
+                    right: unset;
+                    right: calc(50% + 6px)
+                }
+            }
+        }
+
+        /*!@::slotted(ion-badge:empty)*/
+
+        .sc-ion-tab-button-md-s>ion-badge:empty {
+            display: block;
+            min-width: 8px;
+            height: 8px
+        }
+
+        /*!@:host(.tab-layout-icon-top) ::slotted(ion-icon)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-top .sc-ion-tab-button-md-s>ion-icon {
+            margin-top: 6px;
+            margin-bottom: 2px
+        }
+
+        /*!@:host(.tab-layout-icon-top) ::slotted(ion-label)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-top .sc-ion-tab-button-md-s>ion-label {
+            margin-top: 0;
+            margin-bottom: 6px
+        }
+
+        /*!@:host(.tab-layout-icon-bottom) ::slotted(ion-badge)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-bottom .sc-ion-tab-button-md-s>ion-badge {
+            top: 8px
+        }
+
+        @supports (inset-inline-start: 0) {
+            /*!@:host(.tab-layout-icon-bottom) ::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-h.tab-layout-icon-bottom .sc-ion-tab-button-md-s>ion-badge {
+                inset-inline-start: 70%
+            }
+        }
+
+        @supports not (inset-inline-start: 0) {
+            /*!@:host(.tab-layout-icon-bottom) ::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-h.tab-layout-icon-bottom .sc-ion-tab-button-md-s>ion-badge {
+                left: 70%
+            }
+            /*!@:host-context([dir=rtl]):host(.tab-layout-icon-bottom) ::slotted(ion-badge), :host-context([dir=rtl]).tab-layout-icon-bottom ::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-h[dir=rtl].sc-ion-tab-button-md-h.tab-layout-icon-bottom .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.sc-ion-tab-button-md-h.tab-layout-icon-bottom.sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.sc-ion-tab-button-md-h.tab-layout-icon-bottom .sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].tab-layout-icon-bottom.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].tab-layout-icon-bottom .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.tab-layout-icon-bottom.sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.tab-layout-icon-bottom .sc-ion-tab-button-md-s>ion-badge {
+                left: unset;
+                right: unset;
+                right: 70%
+            }
+            /*!@@supports selector(:dir(rtl))*/
+            @supports .sc-ion-tab-button-md selector(.sc-ion-tab-button-md:dir(rtl)) {
+                .sc-ion-tab-button-md-h.tab-layout-icon-bottom:dir(rtl) .sc-ion-tab-button-md-s>ion-badge {
+                    left: unset;
+                    right: unset;
+                    right: 70%
+                }
+            }
+        }
+
+        /*!@:host(.tab-layout-icon-bottom) ::slotted(ion-icon)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-bottom .sc-ion-tab-button-md-s>ion-icon {
+            margin-top: 0;
+            margin-bottom: 6px
+        }
+
+        /*!@:host(.tab-layout-icon-bottom) ::slotted(ion-label)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-bottom .sc-ion-tab-button-md-s>ion-label {
+            margin-top: 6px;
+            margin-bottom: 0
+        }
+
+        /*!@:host(.tab-layout-icon-start) ::slotted(ion-badge),
+:host(.tab-layout-icon-end) ::slotted(ion-badge)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-start .sc-ion-tab-button-md-s>ion-badge,
+        .sc-ion-tab-button-md-h.tab-layout-icon-end.sc-ion-tab-button-md-s>ion-badge,
+        .sc-ion-tab-button-md-h.tab-layout-icon-end .sc-ion-tab-button-md-s>ion-badge {
+            top: 16px
+        }
+
+        @supports (inset-inline-start: 0) {
+            /*!@:host(.tab-layout-icon-start) ::slotted(ion-badge),
+  :host(.tab-layout-icon-end) ::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-h.tab-layout-icon-start .sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-layout-icon-end.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-layout-icon-end .sc-ion-tab-button-md-s>ion-badge {
+                inset-inline-start: 80%
+            }
+        }
+
+        @supports not (inset-inline-start: 0) {
+            /*!@:host(.tab-layout-icon-start) ::slotted(ion-badge),
+  :host(.tab-layout-icon-end) ::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-h.tab-layout-icon-start .sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-layout-icon-end.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-layout-icon-end .sc-ion-tab-button-md-s>ion-badge {
+                left: 80%
+            }
+            /*!@:host-context([dir=rtl]):host(.tab-layout-icon-start) ::slotted(ion-badge), :host-context([dir=rtl]).tab-layout-icon-start ::slotted(ion-badge), :host-context([dir=rtl]):host(.tab-layout-icon-end) ::slotted(ion-badge), :host-context([dir=rtl]).tab-layout-icon-end ::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-h[dir=rtl].sc-ion-tab-button-md-h.tab-layout-icon-start .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.sc-ion-tab-button-md-h.tab-layout-icon-start.sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.sc-ion-tab-button-md-h.tab-layout-icon-start .sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].tab-layout-icon-start.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].tab-layout-icon-start .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.tab-layout-icon-start.sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.tab-layout-icon-start .sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].sc-ion-tab-button-md-h.tab-layout-icon-end.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-layout-icon-end.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-layout-icon-end .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.sc-ion-tab-button-md-h.tab-layout-icon-end.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].tab-layout-icon-end.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].tab-layout-icon-end .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.tab-layout-icon-end.sc-ion-tab-button-md-s>ion-badge {
+                left: unset;
+                right: unset;
+                right: 80%
+            }
+            /*!@@supports selector(:dir(rtl))*/
+            @supports .sc-ion-tab-button-md selector(.sc-ion-tab-button-md:dir(rtl)) {
+                .sc-ion-tab-button-md-h.tab-layout-icon-start:dir(rtl) .sc-ion-tab-button-md-s>ion-badge,
+                .sc-ion-tab-button-md-h.tab-layout-icon-end:dir(rtl).sc-ion-tab-button-md-s>ion-badge,
+                .sc-ion-tab-button-md-h.tab-layout-icon-end:dir(rtl) .sc-ion-tab-button-md-s>ion-badge {
+                    left: unset;
+                    right: unset;
+                    right: 80%
+                }
+            }
+        }
+
+        /*!@:host(.tab-layout-icon-start) ::slotted(ion-icon)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-start .sc-ion-tab-button-md-s>ion-icon {
+            -webkit-margin-end: 6px;
+            margin-inline-end: 6px
+        }
+
+        /*!@:host(.tab-layout-icon-end) ::slotted(ion-icon)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-end .sc-ion-tab-button-md-s>ion-icon {
+            -webkit-margin-start: 6px;
+            margin-inline-start: 6px
+        }
+
+        /*!@:host(.tab-layout-icon-hide) ::slotted(ion-badge),
+:host(.tab-has-label-only) ::slotted(ion-badge)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-hide .sc-ion-tab-button-md-s>ion-badge,
+        .sc-ion-tab-button-md-h.tab-has-label-only.sc-ion-tab-button-md-s>ion-badge,
+        .sc-ion-tab-button-md-h.tab-has-label-only .sc-ion-tab-button-md-s>ion-badge {
+            top: 16px
+        }
+
+        @supports (inset-inline-start: 0) {
+            /*!@:host(.tab-layout-icon-hide) ::slotted(ion-badge),
+  :host(.tab-has-label-only) ::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-h.tab-layout-icon-hide .sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-has-label-only.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-has-label-only .sc-ion-tab-button-md-s>ion-badge {
+                inset-inline-start: 70%
+            }
+        }
+
+        @supports not (inset-inline-start: 0) {
+            /*!@:host(.tab-layout-icon-hide) ::slotted(ion-badge),
+  :host(.tab-has-label-only) ::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-h.tab-layout-icon-hide .sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-has-label-only.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-has-label-only .sc-ion-tab-button-md-s>ion-badge {
+                left: 70%
+            }
+            /*!@:host-context([dir=rtl]):host(.tab-layout-icon-hide) ::slotted(ion-badge), :host-context([dir=rtl]).tab-layout-icon-hide ::slotted(ion-badge), :host-context([dir=rtl]):host(.tab-has-label-only) ::slotted(ion-badge), :host-context([dir=rtl]).tab-has-label-only ::slotted(ion-badge)*/
+            .sc-ion-tab-button-md-h[dir=rtl].sc-ion-tab-button-md-h.tab-layout-icon-hide .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.sc-ion-tab-button-md-h.tab-layout-icon-hide.sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.sc-ion-tab-button-md-h.tab-layout-icon-hide .sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].tab-layout-icon-hide.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].tab-layout-icon-hide .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.tab-layout-icon-hide.sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.tab-layout-icon-hide .sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].sc-ion-tab-button-md-h.tab-has-label-only.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-has-label-only.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h.tab-has-label-only .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.sc-ion-tab-button-md-h.tab-has-label-only.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].tab-has-label-only.sc-ion-tab-button-md-s>ion-badge,
+            .sc-ion-tab-button-md-h[dir=rtl].tab-has-label-only .sc-ion-tab-button-md-s>ion-badge,
+            [dir=rtl] .sc-ion-tab-button-md-h.tab-has-label-only.sc-ion-tab-button-md-s>ion-badge {
+                left: unset;
+                right: unset;
+                right: 70%
+            }
+            /*!@@supports selector(:dir(rtl))*/
+            @supports .sc-ion-tab-button-md selector(.sc-ion-tab-button-md:dir(rtl)) {
+                .sc-ion-tab-button-md-h.tab-layout-icon-hide:dir(rtl) .sc-ion-tab-button-md-s>ion-badge,
+                .sc-ion-tab-button-md-h.tab-has-label-only:dir(rtl).sc-ion-tab-button-md-s>ion-badge,
+                .sc-ion-tab-button-md-h.tab-has-label-only:dir(rtl) .sc-ion-tab-button-md-s>ion-badge {
+                    left: unset;
+                    right: unset;
+                    right: 70%
+                }
+            }
+        }
+
+        /*!@:host(.tab-layout-icon-hide) ::slotted(ion-label),
+:host(.tab-has-label-only) ::slotted(ion-label)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-icon-hide .sc-ion-tab-button-md-s>ion-label,
+        .sc-ion-tab-button-md-h.tab-has-label-only.sc-ion-tab-button-md-s>ion-label,
+        .sc-ion-tab-button-md-h.tab-has-label-only .sc-ion-tab-button-md-s>ion-label {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        /*!@:host(.tab-layout-label-hide) ::slotted(ion-badge),
+:host(.tab-has-icon-only) ::slotted(ion-badge)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-label-hide .sc-ion-tab-button-md-s>ion-badge,
+        .sc-ion-tab-button-md-h.tab-has-icon-only.sc-ion-tab-button-md-s>ion-badge,
+        .sc-ion-tab-button-md-h.tab-has-icon-only .sc-ion-tab-button-md-s>ion-badge {
+            top: 16px
+        }
+
+        /*!@:host(.tab-layout-label-hide) ::slotted(ion-icon),
+:host(.tab-has-icon-only) ::slotted(ion-icon)*/
+
+        .sc-ion-tab-button-md-h.tab-layout-label-hide .sc-ion-tab-button-md-s>ion-icon,
+        .sc-ion-tab-button-md-h.tab-has-icon-only.sc-ion-tab-button-md-s>ion-icon,
+        .sc-ion-tab-button-md-h.tab-has-icon-only .sc-ion-tab-button-md-s>ion-icon {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 24px
+        }
+    </style>
+    <style sty-id="sc-ion-buttons-md">
+        .sc-ion-buttons-md-h {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            z-index: 99
+        }
+
+        .sc-ion-buttons-md-s ion-button {
+            --padding-top: 0;
+            --padding-bottom: 0;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 0
+        }
+
+        .sc-ion-buttons-md-s ion-button {
+            --padding-top: 3px;
+            --padding-bottom: 3px;
+            --padding-start: 8px;
+            --padding-end: 8px;
+            --box-shadow: none;
+            -webkit-margin-start: 2px;
+            margin-inline-start: 2px;
+            -webkit-margin-end: 2px;
+            margin-inline-end: 2px;
+            min-height: 32px
+        }
+
+        .sc-ion-buttons-md-s .button-has-icon-only {
+            --padding-top: 0;
+            --padding-bottom: 0
+        }
+
+        .sc-ion-buttons-md-s ion-button:not(.button-round) {
+            --border-radius: 2px
+        }
+
+        .sc-ion-buttons-md-h.ion-color.sc-ion-buttons-md-s .button,
+        .ion-color .sc-ion-buttons-md-h.sc-ion-buttons-md-s .button {
+            --color: initial;
+            --color-focused: var(--ion-color-contrast);
+            --color-hover: var(--ion-color-contrast);
+            --background-activated: transparent;
+            --background-focused: var(--ion-color-contrast);
+            --background-hover: var(--ion-color-contrast)
+        }
+
+        .sc-ion-buttons-md-h.ion-color.sc-ion-buttons-md-s .button-solid,
+        .ion-color .sc-ion-buttons-md-h.sc-ion-buttons-md-s .button-solid {
+            --background: var(--ion-color-contrast);
+            --background-activated: transparent;
+            --background-focused: var(--ion-color-shade);
+            --background-hover: var(--ion-color-base);
+            --color: var(--ion-color-base);
+            --color-focused: var(--ion-color-base);
+            --color-hover: var(--ion-color-base)
+        }
+
+        .sc-ion-buttons-md-h.ion-color.sc-ion-buttons-md-s .button-outline,
+        .ion-color .sc-ion-buttons-md-h.sc-ion-buttons-md-s .button-outline {
+            --border-color: var(--ion-color-contrast)
+        }
+
+        .sc-ion-buttons-md-s .button-has-icon-only.button-clear {
+            --padding-top: 12px;
+            --padding-end: 12px;
+            --padding-bottom: 12px;
+            --padding-start: 12px;
+            --border-radius: 50%;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            width: 3rem;
+            height: 3rem
+        }
+
+        .sc-ion-buttons-md-s .button {
+            --background-hover: currentColor
+        }
+
+        .sc-ion-buttons-md-s .button-solid {
+            --color: var(--ion-toolbar-background, var(--ion-background-color, #fff));
+            --background: var(--ion-toolbar-color, var(--ion-text-color, #424242));
+            --background-activated: transparent;
+            --background-focused: currentColor
+        }
+
+        .sc-ion-buttons-md-s .button-outline {
+            --color: initial;
+            --background: transparent;
+            --background-activated: transparent;
+            --background-focused: currentColor;
+            --background-hover: currentColor;
+            --border-color: currentColor
+        }
+
+        .sc-ion-buttons-md-s .button-clear {
+            --color: initial;
+            --background: transparent;
+            --background-activated: transparent;
+            --background-focused: currentColor;
+            --background-hover: currentColor
+        }
+
+        .sc-ion-buttons-md-s ion-icon[slot=start] {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            -webkit-margin-end: 0.3em;
+            margin-inline-end: 0.3em;
+            font-size: 1.4em
+        }
+
+        .sc-ion-buttons-md-s ion-icon[slot=end] {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            -webkit-margin-start: 0.4em;
+            margin-inline-start: 0.4em;
+            font-size: 1.4em
+        }
+
+        .sc-ion-buttons-md-s ion-icon[slot=icon-only] {
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 1.8em
+        }
+    </style>
+    <style sty-id="sc-ion-title-md">
+        /*!@:host*/
+
+        .sc-ion-title-md-h {
+            --color: initial;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex: 1;
+            flex: 1;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            color: var(--color)
+        }
+
+        /*!@:host(.ion-color)*/
+
+        .ion-color.sc-ion-title-md-h {
+            color: var(--ion-color-base)
+        }
+
+        /*!@.toolbar-title*/
+
+        .toolbar-title.sc-ion-title-md {
+            display: block;
+            width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            pointer-events: auto
+        }
+
+        /*!@:host(.title-small) .toolbar-title*/
+
+        .title-small.sc-ion-title-md-h .toolbar-title.sc-ion-title-md {
+            white-space: normal
+        }
+
+        /*!@:host*/
+
+        .sc-ion-title-md-h {
+            -webkit-padding-start: 20px;
+            padding-inline-start: 20px;
+            -webkit-padding-end: 20px;
+            padding-inline-end: 20px;
+            padding-top: 0;
+            padding-bottom: 0;
+            font-size: 1.25rem;
+            font-weight: 500;
+            letter-spacing: 0.0125em
+        }
+
+        /*!@:host(.title-small)*/
+
+        .title-small.sc-ion-title-md-h {
+            width: 100%;
+            height: 100%;
+            font-size: 0.9375rem;
+            font-weight: normal
+        }
+    </style>
+    <style sty-id="sc-ion-icon">
+        /*!@:host*/
+
+        .sc-ion-icon-h {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            contain: strict;
+            fill: currentColor;
+            -webkit-box-sizing: content-box !important;
+            box-sizing: content-box !important
+        }
+
+        /*!@:host .ionicon*/
+
+        .sc-ion-icon-h .ionicon.sc-ion-icon {
+            stroke: currentColor
+        }
+
+        /*!@.ionicon-fill-none*/
+
+        .ionicon-fill-none.sc-ion-icon {
+            fill: none
+        }
+
+        /*!@.ionicon-stroke-width*/
+
+        .ionicon-stroke-width.sc-ion-icon {
+            stroke-width: 32px;
+            stroke-width: var(--ionicon-stroke-width, 32px)
+        }
+
+        /*!@.icon-inner,
+.ionicon,
+svg*/
+
+        .icon-inner.sc-ion-icon,
+        .ionicon.sc-ion-icon,
+        svg.sc-ion-icon {
+            display: block;
+            height: 100%;
+            width: 100%
+        }
+
+        @supports (background: -webkit-named-image(i)) {
+            /*!@:host(.icon-rtl) .icon-inner*/
+            .icon-rtl.sc-ion-icon-h .icon-inner.sc-ion-icon {
+                -webkit-transform: scaleX(-1);
+                transform: scaleX(-1)
+            }
+        }
+
+        @supports not selector(:dir(rtl)) and selector(:host-context([dir='rtl'])) {
+            /*!@:host(.icon-rtl) .icon-inner*/
+            .icon-rtl.sc-ion-icon-h .icon-inner.sc-ion-icon {
+                -webkit-transform: scaleX(-1);
+                transform: scaleX(-1)
+            }
+        }
+
+        /*!@:host(.flip-rtl):host-context([dir='rtl']) .icon-inner*/
+
+        .flip-rtl.sc-ion-icon-h -no-combinator[dir='rtl'].sc-ion-icon-h .icon-inner.sc-ion-icon,
+        [dir='rtl'] .sc-ion-icon-h .icon-inner.sc-ion-icon {
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1)
+        }
+
+        @supports selector(:dir(rtl)) {
+            /*!@:host(.flip-rtl:dir(rtl)) .icon-inner*/
+            .flip-rtl.sc-ion-icon-h:dir(rtl) .icon-inner.sc-ion-icon {
+                -webkit-transform: scaleX(-1);
+                transform: scaleX(-1)
+            }
+            /*!@:host(.flip-rtl:dir(ltr)) .icon-inner*/
+            .flip-rtl.sc-ion-icon-h:dir(ltr) .icon-inner.sc-ion-icon {
+                -webkit-transform: scaleX(1);
+                transform: scaleX(1)
+            }
+        }
+
+        /*!@:host(.icon-small)*/
+
+        .icon-small.sc-ion-icon-h {
+            font-size: 1.125rem !important
+        }
+
+        /*!@:host(.icon-large)*/
+
+        .icon-large.sc-ion-icon-h {
+            font-size: 2rem !important
+        }
+
+        /*!@:host(.ion-color)*/
+
+        .ion-color.sc-ion-icon-h {
+            color: var(--ion-color-base) !important
+        }
+
+        /*!@:host(.ion-color-primary)*/
+
+        .ion-color-primary.sc-ion-icon-h {
+            --ion-color-base: var(--ion-color-primary, #3880ff)
+        }
+
+        /*!@:host(.ion-color-secondary)*/
+
+        .ion-color-secondary.sc-ion-icon-h {
+            --ion-color-base: var(--ion-color-secondary, #0cd1e8)
+        }
+
+        /*!@:host(.ion-color-tertiary)*/
+
+        .ion-color-tertiary.sc-ion-icon-h {
+            --ion-color-base: var(--ion-color-tertiary, #f4a942)
+        }
+
+        /*!@:host(.ion-color-success)*/
+
+        .ion-color-success.sc-ion-icon-h {
+            --ion-color-base: var(--ion-color-success, #10dc60)
+        }
+
+        /*!@:host(.ion-color-warning)*/
+
+        .ion-color-warning.sc-ion-icon-h {
+            --ion-color-base: var(--ion-color-warning, #ffce00)
+        }
+
+        /*!@:host(.ion-color-danger)*/
+
+        .ion-color-danger.sc-ion-icon-h {
+            --ion-color-base: var(--ion-color-danger, #f14141)
+        }
+
+        /*!@:host(.ion-color-light)*/
+
+        .ion-color-light.sc-ion-icon-h {
+            --ion-color-base: var(--ion-color-light, #f4f5f8)
+        }
+
+        /*!@:host(.ion-color-medium)*/
+
+        .ion-color-medium.sc-ion-icon-h {
+            --ion-color-base: var(--ion-color-medium, #989aa2)
+        }
+
+        /*!@:host(.ion-color-dark)*/
+
+        .ion-color-dark.sc-ion-icon-h {
+            --ion-color-base: var(--ion-color-dark, #222428)
+        }
+    </style>
+    <style sty-id="sc-ion-ripple-effect">
+        /*!@:host*/
+
+        .sc-ion-ripple-effect-h {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            contain: strict;
+            pointer-events: none
+        }
+
+        /*!@:host(.unbounded)*/
+
+        .unbounded.sc-ion-ripple-effect-h {
+            contain: layout size style
+        }
+
+        /*!@.ripple-effect*/
+
+        .ripple-effect.sc-ion-ripple-effect {
+            border-radius: 50%;
+            position: absolute;
+            background-color: currentColor;
+            color: inherit;
+            contain: strict;
+            opacity: 0;
+            -webkit-animation: 225ms rippleAnimation forwards, 75ms fadeInAnimation forwards;
+            animation: 225ms rippleAnimation forwards, 75ms fadeInAnimation forwards;
+            will-change: transform, opacity;
+            pointer-events: none
+        }
+
+        /*!@.fade-out*/
+
+        .fade-out.sc-ion-ripple-effect {
+            -webkit-transform: translate(var(--translate-end)) scale(var(--final-scale, 1));
+            transform: translate(var(--translate-end)) scale(var(--final-scale, 1));
+            -webkit-animation: 150ms fadeOutAnimation forwards;
+            animation: 150ms fadeOutAnimation forwards
+        }
+
+        @-webkit-keyframes rippleAnimation {
+            from {
+                -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                -webkit-transform: scale(1);
+                transform: scale(1)
+            }
+            to {
+                -webkit-transform: translate(var(--translate-end)) scale(var(--final-scale, 1));
+                transform: translate(var(--translate-end)) scale(var(--final-scale, 1))
+            }
+        }
+
+        @keyframes rippleAnimation {
+            from {
+                -webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                -webkit-transform: scale(1);
+                transform: scale(1)
+            }
+            to {
+                -webkit-transform: translate(var(--translate-end)) scale(var(--final-scale, 1));
+                transform: translate(var(--translate-end)) scale(var(--final-scale, 1))
+            }
+        }
+
+        @-webkit-keyframes fadeInAnimation {
+            from {
+                -webkit-animation-timing-function: linear;
+                animation-timing-function: linear;
+                opacity: 0
+            }
+            to {
+                opacity: 0.16
+            }
+        }
+
+        @keyframes fadeInAnimation {
+            from {
+                -webkit-animation-timing-function: linear;
+                animation-timing-function: linear;
+                opacity: 0
+            }
+            to {
+                opacity: 0.16
+            }
+        }
+
+        @-webkit-keyframes fadeOutAnimation {
+            from {
+                -webkit-animation-timing-function: linear;
+                animation-timing-function: linear;
+                opacity: 0.16
+            }
+            to {
+                opacity: 0
+            }
+        }
+
+        @keyframes fadeOutAnimation {
+            from {
+                -webkit-animation-timing-function: linear;
+                animation-timing-function: linear;
+                opacity: 0.16
+            }
+            to {
+                opacity: 0
+            }
+        }
+    </style>
+    <style sty-id="sc-ion-label-md">
+        .item.sc-ion-label-md-h,
+        .item .sc-ion-label-md-h {
+            --color: initial;
+            display: block;
+            color: var(--color);
+            font-family: var(--ion-font-family, inherit);
+            font-size: inherit;
+            text-overflow: ellipsis;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        .item-legacy.sc-ion-label-md-h,
+        .item-legacy .sc-ion-label-md-h {
+            white-space: nowrap;
+            overflow: hidden
+        }
+
+        .ion-color.sc-ion-label-md-h {
+            color: var(--ion-color-base)
+        }
+
+        .ion-text-nowrap.sc-ion-label-md-h {
+            overflow: hidden
+        }
+
+        .item-interactive-disabled.sc-ion-label-md-h:not(.item-multiple-inputs),
+        .item-interactive-disabled:not(.item-multiple-inputs) .sc-ion-label-md-h {
+            cursor: default;
+            opacity: 0.3;
+            pointer-events: none
+        }
+
+        .item-input.sc-ion-label-md-h,
+        .item-input .sc-ion-label-md-h {
+            -ms-flex: initial;
+            flex: initial;
+            max-width: 200px;
+            pointer-events: none
+        }
+
+        .item-textarea.sc-ion-label-md-h,
+        .item-textarea .sc-ion-label-md-h {
+            -ms-flex-item-align: baseline;
+            align-self: baseline
+        }
+
+        .item-skeleton-text.sc-ion-label-md-h,
+        .item-skeleton-text .sc-ion-label-md-h {
+            overflow: hidden
+        }
+
+        .label-fixed.sc-ion-label-md-h {
+            -ms-flex: 0 0 100px;
+            flex: 0 0 100px;
+            width: 100px;
+            min-width: 100px;
+            max-width: 200px
+        }
+
+        .label-stacked.sc-ion-label-md-h,
+        .label-floating.sc-ion-label-md-h {
+            margin-bottom: 0;
+            -ms-flex-item-align: stretch;
+            align-self: stretch;
+            width: auto;
+            max-width: 100%
+        }
+
+        .label-no-animate.label-floating.sc-ion-label-md-h {
+            -webkit-transition: none;
+            transition: none
+        }
+
+        .sc-ion-label-md-s h1,
+        .sc-ion-label-md-s h2,
+        .sc-ion-label-md-s h3,
+        .sc-ion-label-md-s h4,
+        .sc-ion-label-md-s h5,
+        .sc-ion-label-md-s h6 {
+            text-overflow: inherit;
+            overflow: inherit
+        }
+
+        .ion-text-wrap.sc-ion-label-md-h {
+            line-height: 1.5
+        }
+
+        .label-stacked.sc-ion-label-md-h,
+        .label-floating.sc-ion-label-md-h {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            -webkit-transform-origin: top left;
+            transform-origin: top left
+        }
+
+        .label-stacked.label-rtl.sc-ion-label-md-h,
+        .label-floating.label-rtl.sc-ion-label-md-h {
+            -webkit-transform-origin: top right;
+            transform-origin: top right
+        }
+
+        .label-stacked.sc-ion-label-md-h {
+            -webkit-transform: translateY(50%) scale(0.75);
+            transform: translateY(50%) scale(0.75);
+            -webkit-transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1)
+        }
+
+        .label-floating.sc-ion-label-md-h {
+            -webkit-transform: translateY(96%);
+            transform: translateY(96%);
+            -webkit-transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1)
+        }
+
+        .ion-focused.label-floating.sc-ion-label-md-h,
+        .ion-focused .label-floating.sc-ion-label-md-h,
+        .item-has-focus.label-floating.sc-ion-label-md-h,
+        .item-has-focus .label-floating.sc-ion-label-md-h,
+        .item-has-placeholder.sc-ion-label-md-h:not(.item-input).label-floating,
+        .item-has-placeholder:not(.item-input) .label-floating.sc-ion-label-md-h,
+        .item-has-value.label-floating.sc-ion-label-md-h,
+        .item-has-value .label-floating.sc-ion-label-md-h {
+            -webkit-transform: translateY(50%) scale(0.75);
+            transform: translateY(50%) scale(0.75)
+        }
+
+        .item-fill-outline.ion-focused.label-floating.sc-ion-label-md-h,
+        .item-fill-outline.ion-focused .label-floating.sc-ion-label-md-h,
+        .item-fill-outline.item-has-focus.label-floating.sc-ion-label-md-h,
+        .item-fill-outline.item-has-focus .label-floating.sc-ion-label-md-h,
+        .item-fill-outline.item-has-placeholder.sc-ion-label-md-h:not(.item-input).label-floating,
+        .item-fill-outline.item-has-placeholder:not(.item-input) .label-floating.sc-ion-label-md-h,
+        .item-fill-outline.item-has-value.label-floating.sc-ion-label-md-h,
+        .item-fill-outline.item-has-value .label-floating.sc-ion-label-md-h {
+            -webkit-transform: translateY(-6px) scale(0.75);
+            transform: translateY(-6px) scale(0.75);
+            position: relative;
+            max-width: -webkit-min-content;
+            max-width: -moz-min-content;
+            max-width: min-content;
+            background-color: var(--ion-item-background, var(--ion-background-color, #fff));
+            overflow: visible;
+            z-index: 3
+        }
+
+        .item-fill-outline.ion-focused.label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.ion-focused .label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.ion-focused.label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.ion-focused .label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.item-has-focus.label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.item-has-focus .label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.item-has-focus.label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.item-has-focus .label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.item-has-placeholder.sc-ion-label-md-h:not(.item-input).label-floating::before,
+        .item-fill-outline.item-has-placeholder:not(.item-input) .label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.item-has-placeholder.sc-ion-label-md-h:not(.item-input).label-floating::after,
+        .item-fill-outline.item-has-placeholder:not(.item-input) .label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.item-has-value.label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.item-has-value .label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.item-has-value.label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.item-has-value .label-floating.sc-ion-label-md-h::after {
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            background-color: var(--ion-item-background, var(--ion-background-color, #fff));
+            content: ""
+        }
+
+        .item-fill-outline.ion-focused.label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.ion-focused .label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.item-has-focus.label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.item-has-focus .label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.item-has-placeholder.sc-ion-label-md-h:not(.item-input).label-floating::before,
+        .item-fill-outline.item-has-placeholder:not(.item-input) .label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.item-has-value.label-floating.sc-ion-label-md-h::before,
+        .item-fill-outline.item-has-value .label-floating.sc-ion-label-md-h::before {
+            left: calc(-1 * 4px)
+        }
+
+        .item-fill-outline.ion-focused.label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.ion-focused .label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.item-has-focus.label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.item-has-focus .label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.item-has-placeholder.sc-ion-label-md-h:not(.item-input).label-floating::after,
+        .item-fill-outline.item-has-placeholder:not(.item-input) .label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.item-has-value.label-floating.sc-ion-label-md-h::after,
+        .item-fill-outline.item-has-value .label-floating.sc-ion-label-md-h::after {
+            right: calc(-1 * 4px)
+        }
+
+        .item-fill-outline.ion-focused.item-has-start-slot.label-floating.sc-ion-label-md-h,
+        .item-fill-outline.ion-focused.item-has-start-slot .label-floating.sc-ion-label-md-h,
+        .item-fill-outline.item-has-focus.item-has-start-slot.label-floating.sc-ion-label-md-h,
+        .item-fill-outline.item-has-focus.item-has-start-slot .label-floating.sc-ion-label-md-h,
+        .item-fill-outline.item-has-placeholder.sc-ion-label-md-h:not(.item-input).item-has-start-slot.label-floating,
+        .item-fill-outline.item-has-placeholder:not(.item-input).item-has-start-slot .label-floating.sc-ion-label-md-h,
+        .item-fill-outline.item-has-value.item-has-start-slot.label-floating.sc-ion-label-md-h,
+        .item-fill-outline.item-has-value.item-has-start-slot .label-floating.sc-ion-label-md-h {
+            -webkit-transform: translateX(-32px) translateY(-6px) scale(0.75);
+            transform: translateX(-32px) translateY(-6px) scale(0.75)
+        }
+
+        .item-fill-outline.ion-focused.item-has-start-slot.label-floating.label-rtl.sc-ion-label-md-h,
+        .item-fill-outline.ion-focused.item-has-start-slot .label-floating.label-rtl.sc-ion-label-md-h,
+        .item-fill-outline.item-has-focus.item-has-start-slot.label-floating.label-rtl.sc-ion-label-md-h,
+        .item-fill-outline.item-has-focus.item-has-start-slot .label-floating.label-rtl.sc-ion-label-md-h,
+        .item-fill-outline.item-has-placeholder.sc-ion-label-md-h:not(.item-input).item-has-start-slot.label-floating.label-rtl,
+        .item-fill-outline.item-has-placeholder:not(.item-input).item-has-start-slot .label-floating.label-rtl.sc-ion-label-md-h,
+        .item-fill-outline.item-has-value.item-has-start-slot.label-floating.label-rtl.sc-ion-label-md-h,
+        .item-fill-outline.item-has-value.item-has-start-slot .label-floating.label-rtl.sc-ion-label-md-h {
+            -webkit-transform: translateX(calc(-1 * -32px)) translateY(-6px) scale(0.75);
+            transform: translateX(calc(-1 * -32px)) translateY(-6px) scale(0.75)
+        }
+
+        .ion-focused.label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .ion-focused .label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .ion-focused.label-floating.sc-ion-label-md-h:not(.ion-color),
+        .ion-focused .label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-has-focus.label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-has-focus .label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-has-focus.label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-has-focus .label-floating.sc-ion-label-md-h:not(.ion-color) {
+            color: var(--ion-color-primary, #3880ff)
+        }
+
+        .ion-focused.ion-color.label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .ion-focused.ion-color .label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .ion-focused.ion-color.label-floating.sc-ion-label-md-h:not(.ion-color),
+        .ion-focused.ion-color .label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-has-focus.ion-color.label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-has-focus.ion-color .label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-has-focus.ion-color.label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-has-focus.ion-color .label-floating.sc-ion-label-md-h:not(.ion-color) {
+            color: var(--ion-color-contrast)
+        }
+
+        .item-fill-solid.ion-focused.ion-color.label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-solid.ion-focused.ion-color .label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-solid.ion-focused.ion-color.label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-solid.ion-focused.ion-color .label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-outline.ion-focused.ion-color.label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-outline.ion-focused.ion-color .label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-outline.ion-focused.ion-color.label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-outline.ion-focused.ion-color .label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-solid.item-has-focus.ion-color.label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-solid.item-has-focus.ion-color .label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-solid.item-has-focus.ion-color.label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-solid.item-has-focus.ion-color .label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-outline.item-has-focus.ion-color.label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-outline.item-has-focus.ion-color .label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-outline.item-has-focus.ion-color.label-floating.sc-ion-label-md-h:not(.ion-color),
+        .item-fill-outline.item-has-focus.ion-color .label-floating.sc-ion-label-md-h:not(.ion-color) {
+            color: var(--ion-color-base)
+        }
+
+        .ion-invalid.ion-touched.label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .ion-invalid.ion-touched .label-stacked.sc-ion-label-md-h:not(.ion-color),
+        .ion-invalid.ion-touched.label-floating.sc-ion-label-md-h:not(.ion-color),
+        .ion-invalid.ion-touched .label-floating.sc-ion-label-md-h:not(.ion-color) {
+            color: var(--highlight-color-invalid)
+        }
+
+        .sc-ion-label-md-s h1 {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 2px;
+            font-size: 1.5rem;
+            font-weight: normal
+        }
+
+        .sc-ion-label-md-s h2 {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-size: 1rem;
+            font-weight: normal
+        }
+
+        .sc-ion-label-md-s h3,
+        .sc-ion-label-md-s h4,
+        .sc-ion-label-md-s h5,
+        .sc-ion-label-md-s h6 {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-size: 0.875rem;
+            font-weight: normal;
+            line-height: normal
+        }
+
+        .sc-ion-label-md-s p {
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
+            margin-bottom: 2px;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            text-overflow: inherit;
+            overflow: inherit
+        }
+
+        .sc-ion-label-md-s>p {
+            color: var(--ion-color-step-600, #666666)
+        }
+
+        .sc-ion-label-md-h.in-item-color.sc-ion-label-md-s>p {
+            color: inherit
+        }
+    </style>
+    <link rel="search" title="Sign Translate" type="application/opensearchdescription+xml" href="/opensearch.xml">
+    <meta name="rating" content="safe for kids">
+
+    <base href="/">
+    <link rel="home" href="/">
+    <link rel="msapplication-starturl" href="/">
+
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1">
+
+    <meta name="google" content="notranslate">
+    <meta name="format-detection" content="telephone=no">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Sign Translate">
+    <meta name="apple-mobile-web-app-title" content="Sign Translate">
+
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="alternate icon" type="image/png" sizes="196x196" href="assets/icons/generated/favicon-196.png">
+    <link rel="mask-icon" href="assets/icons/favicon.svg" color="white">
+
+    <meta name="msapplication-square70x70logo" content="assets/icons/generated/mstile-icon-128.png">
+    <meta name="msapplication-square150x150logo" content="assets/icons/generated/mstile-icon-270.png">
+    <meta name="msapplication-square310x310logo" content="assets/icons/generated/mstile-icon-558.png">
+    <meta name="msapplication-wide310x150logo" content="assets/icons/generated/mstile-icon-558-270.png">
+
+    <link rel="apple-touch-icon" href="assets/icons/generated/apple-icon-180.png">
+
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2048-2732.jpg" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2732-2048.jpg" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1668-2388.jpg" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2388-1668.jpg" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1536-2048.jpg" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2048-1536.jpg" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1668-2224.jpg" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2224-1668.jpg" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1620-2160.jpg" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2160-1620.jpg" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1284-2778.jpg" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2778-1284.jpg" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1170-2532.jpg" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2532-1170.jpg" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1125-2436.jpg" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2436-1125.jpg" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1242-2688.jpg" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2688-1242.jpg" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-828-1792.jpg" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1792-828.jpg" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1242-2208.jpg" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-2208-1242.jpg" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-750-1334.jpg" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1334-750.jpg" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-640-1136.jpg" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-1136-640.jpg" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2048-2732.jpg" media="(prefers-color-scheme: dark) and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2732-2048.jpg" media="(prefers-color-scheme: dark) and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1668-2388.jpg" media="(prefers-color-scheme: dark) and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2388-1668.jpg" media="(prefers-color-scheme: dark) and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1536-2048.jpg" media="(prefers-color-scheme: dark) and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2048-1536.jpg" media="(prefers-color-scheme: dark) and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1668-2224.jpg" media="(prefers-color-scheme: dark) and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2224-1668.jpg" media="(prefers-color-scheme: dark) and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1620-2160.jpg" media="(prefers-color-scheme: dark) and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2160-1620.jpg" media="(prefers-color-scheme: dark) and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1284-2778.jpg" media="(prefers-color-scheme: dark) and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2778-1284.jpg" media="(prefers-color-scheme: dark) and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1170-2532.jpg" media="(prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2532-1170.jpg" media="(prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1125-2436.jpg" media="(prefers-color-scheme: dark) and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2436-1125.jpg" media="(prefers-color-scheme: dark) and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1242-2688.jpg" media="(prefers-color-scheme: dark) and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2688-1242.jpg" media="(prefers-color-scheme: dark) and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-828-1792.jpg" media="(prefers-color-scheme: dark) and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1792-828.jpg" media="(prefers-color-scheme: dark) and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1242-2208.jpg" media="(prefers-color-scheme: dark) and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-2208-1242.jpg" media="(prefers-color-scheme: dark) and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-750-1334.jpg" media="(prefers-color-scheme: dark) and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1334-750.jpg" media="(prefers-color-scheme: dark) and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-640-1136.jpg" media="(prefers-color-scheme: dark) and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="assets/icons/generated/apple-splash-dark-1136-640.jpg" media="(prefers-color-scheme: dark) and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+    <link rel="stylesheet" href="app.eed966cb7c25ec6b.css">
+    <style ng-app-id="ng">
+        [_nghost-ng-c2260559306] {
+            display: flex;
+            position: absolute;
+            inset: 0;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            contain: layout size style
+        }
+
+        .tabs-inner[_ngcontent-ng-c2260559306] {
+            position: relative;
+            flex: 1;
+            contain: layout size style
+        }
+    </style>
+    <style ng-app-id="ng">
+        app-translate-mobile[_ngcontent-ng-c86841954],
+        app-translate-desktop[_ngcontent-ng-c86841954] {
+            display: contents
+        }
+    </style>
+    <style ng-app-id="ng">
+        @media screen and (min-width: 600px) {
+            .container[_ngcontent-ng-c3105055519]:before {
+                background-color: var(--app-tinted-background-color);
+                border-bottom: 1px solid var(--app-divider-color);
+                content: "";
+                display: block;
+                height: 106px;
+                width: 100%;
+                position: absolute;
+                z-index: -1;
+                left: 0
+            }
+        }
+
+        .container[_ngcontent-ng-c3105055519] {
+            transition: .6s all cubic-bezier(.4, 0, .2, 1)
+        }
+
+        @media screen and (min-width: 1200px) {
+            .container[_ngcontent-ng-c3105055519] {
+                padding: 0 48px 48px
+            }
+        }
+
+        .container[_ngcontent-ng-c3105055519] #input-mode-group[_ngcontent-ng-c3105055519] {
+            height: 68px;
+            font-family: Google Sans, Roboto, Arial, sans-serif;
+            align-items: center;
+            display: flex;
+            gap: .5em
+        }
+
+        @media screen and (max-width: 1279px) {
+            .container[_ngcontent-ng-c3105055519] #input-mode-group[_ngcontent-ng-c3105055519] {
+                padding: 0 12px
+            }
+        }
+
+        @media screen and (max-width: 599px) {
+            .container[_ngcontent-ng-c3105055519] #input-mode-group[_ngcontent-ng-c3105055519] {
+                display: none
+            }
+        }
+
+        .container[_ngcontent-ng-c3105055519] #translation-card[_ngcontent-ng-c3105055519] {
+            background-color: #fff;
+            width: 100%;
+            height: 100%;
+            transition: .6s width cubic-bezier(.4, 0, .2, 1);
+            box-shadow: 0 0 2px #0000005e
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .container[_ngcontent-ng-c3105055519] #translation-card[_ngcontent-ng-c3105055519] {
+                background-color: #101010
+            }
+        }
+
+        @media screen and (min-width: 600px) {
+            .container[_ngcontent-ng-c3105055519] #translation-card[_ngcontent-ng-c3105055519] {
+                box-shadow: 0 0 4px #0000005e
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            .container[_ngcontent-ng-c3105055519] #translation-card[_ngcontent-ng-c3105055519] {
+                border-radius: 8px;
+                overflow: hidden
+            }
+        }
+
+        .container[_ngcontent-ng-c3105055519] #translation-card[_ngcontent-ng-c3105055519] app-language-selectors[_ngcontent-ng-c3105055519] {
+            border-bottom: 1px solid var(--app-divider-color)
+        }
+
+        ntkme-github-button[_ngcontent-ng-c3105055519] {
+            margin: 0 8px
+        }
+
+        #version[_ngcontent-ng-c3105055519] {
+            cursor: help;
+            font-family: monospace
+        }
+    </style>
+    <style ng-app-id="ng">
+        a[_ngcontent-ng-c1195078251] {
+            color: #24292e;
+            text-decoration: none;
+            outline: 0
+        }
+
+        .gh-btn[_ngcontent-ng-c1195078251] {
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+            display: inline-block;
+            font-weight: 600;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid #d1d2d3;
+            border-radius: .25em;
+            background-color: #eff3f6;
+            background-image: linear-gradient(180deg, #f0f3f6, #e6ebf1 90%);
+            background-repeat: repeat-x;
+            background-size: 110% 110%;
+            height: 20px;
+            padding: 0 5px;
+            line-height: 18px;
+            font-size: 11px;
+            white-space: nowrap
+        }
+
+        .gh-btn[_ngcontent-ng-c1195078251]:not(:last-child) {
+            border-radius: .25em 0 0 .25em
+        }
+
+        .gh-btn[_ngcontent-ng-c1195078251]:focus {
+            border-color: #1b1f2333
+        }
+
+        .gh-btn[_ngcontent-ng-c1195078251]:active {
+            background-color: #e9ecef;
+            background-image: none;
+            border-color: #afb1b2;
+            box-shadow: inset 0 .15em .3em #1b1f2326
+        }
+
+        .gh-btn[_ngcontent-ng-c1195078251]:hover {
+            background-color: #e6ebf1;
+            background-image: linear-gradient(to bottom, #f0f3f6, #dce3ec);
+            background-position: -.5em;
+            border-color: #9fa4a9;
+            border-color: #1b1f2359
+        }
+
+        .gh-octicon[_ngcontent-ng-c1195078251] {
+            position: relative;
+            display: inline-block;
+            fill: currentColor;
+            height: 14px;
+            top: 2px;
+            vertical-align: initial
+        }
+
+        .gh-btn[_ngcontent-ng-c1195078251] span[_ngcontent-ng-c1195078251] {
+            vertical-align: 1px
+        }
+
+        .gh-large[_ngcontent-ng-c1195078251] .gh-btn[_ngcontent-ng-c1195078251] {
+            height: 28px;
+            line-height: 26px;
+            padding: 0 10px;
+            font-size: 12px
+        }
+
+        .gh-large[_ngcontent-ng-c1195078251] .gh-btn[_ngcontent-ng-c1195078251] span[_ngcontent-ng-c1195078251] {
+            vertical-align: 0
+        }
+
+        .gh-large[_ngcontent-ng-c1195078251] .gh-octicon[_ngcontent-ng-c1195078251] {
+            height: 16px;
+            top: 4px
+        }
+    </style>
+    <style ng-app-id="ng">
+        .hovering[_nghost-ng-c963451058] {
+            filter: blur(3px)
+        }
+
+        [_nghost-ng-c963451058],
+        div[_ngcontent-ng-c963451058] {
+            height: 100%
+        }
+    </style>
+    <style ng-app-id="ng">
+        [_nghost-ng-c746492120] {
+            display: flex
+        }
+
+        .spoken-to-signed[_nghost-ng-c746492120] {
+            flex-direction: row-reverse
+        }
+
+        app-language-selector[_ngcontent-ng-c746492120] {
+            width: calc(50% - 24px)
+        }
+
+        #swap-languages[_ngcontent-ng-c746492120] {
+            height: 48px;
+            margin: 0
+        }
+
+        #swap-languages[disabled][_ngcontent-ng-c746492120] {
+            opacity: .5
+        }
+    </style>
+    <style ng-app-id="ng">
+        a[_ngcontent-ng-c1391420962] {
+            float: right;
+            color: var(--ion-text-color);
+            font-size: 12px;
+            font-style: italic;
+            font-weight: 400;
+            margin: 8px 0;
+            text-decoration: none
+        }
+
+        @media screen and (max-width: 1279px) {
+            a[_ngcontent-ng-c1391420962] {
+                padding: 0 12px
+            }
+        }
+
+        html[dir=rtl] a {
+            float: left
+        }
+    </style>
+    <style ng-app-id="ng">
+        [_nghost-ng-c3692043147] {
+            display: flex;
+            overflow: hidden
+        }
+
+        mat-tab-group[_ngcontent-ng-c3692043147] {
+            display: inline-block
+        }
+
+        ion-button.menu-icon-button[_ngcontent-ng-c3692043147] {
+            height: 100%;
+            margin: 0
+        }
+
+        ion-button.menu-icon-button[_ngcontent-ng-c3692043147] ion-icon[_ngcontent-ng-c3692043147] {
+            transition: transform .2s cubic-bezier(.4, 0, .2, 1)
+        }
+
+        ion-button.menu-icon-button[aria-expanded=true][_ngcontent-ng-c3692043147] ion-icon[_ngcontent-ng-c3692043147] {
+            transform: rotate(-180deg)
+        }
+
+        ion-button.menu-language-button[_ngcontent-ng-c3692043147] {
+            display: none;
+            width: 100%;
+            height: 100%;
+            margin: 0
+        }
+
+        @media screen and (max-width: 959px) {
+            ion-button.menu-icon-button[_ngcontent-ng-c3692043147],
+            mat-tab-group[_ngcontent-ng-c3692043147] {
+                display: none
+            }
+            ion-button.menu-language-button[_ngcontent-ng-c3692043147] {
+                display: block
+            }
+        }
+
+        [_nghost-ng-c3692043147] div[role=tab] {
+            text-transform: uppercase;
+            font-weight: 400;
+            padding: 0 16px
+        }
+
+        .language-selector-menu {
+            max-height: calc(100vh - 180px) !important
+        }
+
+        .wrap-text[_ngcontent-ng-c3692043147] {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+    </style>
+    <style ng-app-id="ng">
+        ion-button[_ngcontent-ng-c2583486419] {
+            --border-width: 1px;
+            text-transform: none
+        }
+
+        ion-button.selected[_ngcontent-ng-c2583486419] {
+            border-radius: var(--border-radius);
+            background-color: #4285f41f
+        }
+    </style>
+    <style ng-app-id="ng">
+        [_nghost-ng-c349464442] {
+            display: grid;
+            width: 100%;
+            grid-template-areas: "spoken signwriting signed";
+            grid-template-columns: auto 0px 50%
+        }
+
+        @media screen and (max-width: 599px) {
+            [_nghost-ng-c349464442] {
+                grid-template-areas: "signed signed" "spoken signwriting";
+                grid-template-columns: auto 0px
+            }
+            [_nghost-ng-c349464442] app-signed-language-output[_ngcontent-ng-c349464442] {
+                border-bottom: 1px solid var(--app-divider-color)
+            }
+        }
+
+        [_nghost-ng-c349464442]>*[_ngcontent-ng-c349464442]:not(:last-child) {
+            border-inline-end: 1px solid var(--app-divider-color)
+        }
+
+        @media screen and (max-width: 599px) {
+            app-sign-writing[_ngcontent-ng-c349464442] {
+                border: none !important;
+                height: 195px
+            }
+        }
+
+        app-signed-language-output[_ngcontent-ng-c349464442] {
+            grid-area: signed
+        }
+    </style>
+    <style ng-app-id="ng">
+        .translation-text[_ngcontent-ng-c2151509834] {
+            position: relative;
+            height: 100%;
+            padding: 20px 24px;
+            flex: 1
+        }
+
+        .translation-text[_ngcontent-ng-c2151509834]>.actions-row[_ngcontent-ng-c2151509834] {
+            display: flex
+        }
+
+        .translation-text[_ngcontent-ng-c2151509834]>#suggestions[_ngcontent-ng-c2151509834] {
+            position: absolute;
+            bottom: 60px;
+            width: 130%;
+            left: 0;
+            right: 0;
+            padding: 0 24px
+        }
+
+        .translation-text[_ngcontent-ng-c2151509834]>#suggestions[_ngcontent-ng-c2151509834] ion-icon[_ngcontent-ng-c2151509834] {
+            padding: 0 4px
+        }
+
+        .translation-text[_ngcontent-ng-c2151509834]>#suggestions[_ngcontent-ng-c2151509834] a[_ngcontent-ng-c2151509834] {
+            cursor: pointer
+        }
+
+        #spoken-language-label[_ngcontent-ng-c2151509834] {
+            display: none
+        }
+
+        textarea#desktop[_ngcontent-ng-c2151509834] {
+            background-color: transparent;
+            color: inherit;
+            border: none;
+            direction: unset;
+            font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+            font-size: 24px;
+            line-height: 32px;
+            resize: none;
+            outline: none;
+            width: 100%;
+            height: calc(100% - 40px)
+        }
+
+        #char-count[_ngcontent-ng-c2151509834] {
+            flex-grow: 1;
+            align-self: center;
+            text-align: end;
+            font-size: 12px;
+            line-height: 40px;
+            padding-inline: 10px;
+            white-space: nowrap
+        }
+
+        html[dir=rtl] #char-count {
+            direction: ltr;
+            text-align: start !important
+        }
+
+        ion-textarea#mobile[_ngcontent-ng-c2151509834] {
+            margin-top: 6px;
+            margin-bottom: 6px;
+            border-radius: 20px;
+            --padding-start: 10px;
+            --highlight-color: var(--ion-color-primary)
+        }
+
+        ion-textarea#mobile.sc-ion-textarea-ios-h[_ngcontent-ng-c2151509834] {
+            min-height: initial;
+            background-color: #fff
+        }
+
+        @media (prefers-color-scheme: dark) {
+            ion-textarea#mobile.sc-ion-textarea-ios-h[_ngcontent-ng-c2151509834] {
+                background-color: #202124
+            }
+        }
+    </style>
+    <style ng-app-id="ng">
+        [_nghost-ng-c3735418134] {
+            text-align: center;
+            overflow-y: auto;
+            height: 100%;
+            position: relative;
+            color: #000
+        }
+
+        @media (prefers-color-scheme: dark) {
+            [_nghost-ng-c3735418134] {
+                color: #fff
+            }
+        }
+
+        #signs[_ngcontent-ng-c3735418134] {
+            padding: 20px 0;
+            width: 100%;
+            font-size: 24px;
+            position: absolute
+        }
+
+        fsw-sign[_ngcontent-ng-c3735418134] {
+            direction: ltr;
+            display: block;
+            margin: 20px 0;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-touch-callout: none
+        }
+    </style>
+    <style ng-app-id="ng">
+        [_nghost-ng-c3528047752] {
+            background-color: #fff;
+            position: relative;
+            aspect-ratio: 1
+        }
+
+        @media screen and (min-width: 600px) {
+            [_nghost-ng-c3528047752] {
+                background-color: #f5f5f5
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            [_nghost-ng-c3528047752] {
+                background-color: #202124
+            }
+        }
+
+        app-skeleton-pose-viewer[_ngcontent-ng-c3528047752] {
+            height: 100%;
+            display: flex;
+            align-items: center
+        }
+
+        video[_ngcontent-ng-c3528047752] {
+            display: block
+        }
+    </style>
+    <style ng-app-id="ng">
+        a[_ngcontent-ng-c2129951367] {
+            color: #24292e;
+            text-decoration: none;
+            outline: 0
+        }
+
+        .social-count[_ngcontent-ng-c2129951367] {
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+            display: inline-block;
+            font-weight: 600;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid #d1d2d3;
+            border-top-right-radius: .25em;
+            border-bottom-right-radius: .25em;
+            border-left: 0;
+            position: relative;
+            background-color: #fff;
+            font-size: 10px;
+            height: 20px;
+            padding: 0 5px;
+            line-height: 18px
+        }
+
+        .social-count[_ngcontent-ng-c2129951367]:hover {
+            color: #0366d6
+        }
+
+        .social-count[_ngcontent-ng-c2129951367]:focus {
+            border-color: #c8e1ff
+        }
+
+        .gh-large.social-count[_ngcontent-ng-c2129951367] {
+            padding: 0 10px;
+            font-size: 11px;
+            height: 28px;
+            line-height: 26px
+        }
+
+        .gh-large.social-count[_ngcontent-ng-c2129951367] span[_ngcontent-ng-c2129951367] {
+            vertical-align: 0
+        }
+    </style>
+</head>
+
+<body>
+    <app-root _nghost-ng-c1150030715="" ng-version="17.2.3" ng-server-context="ssg">
+        <ion-app _ngcontent-ng-c1150030715="" class="md ion-page hydrated">
+            <!---->
+            <ion-router-outlet _ngcontent-ng-c1150030715="">
+                <app-main _nghost-ng-c1231670170="" class="ion-page">
+                    <ion-tabs _ngcontent-ng-c1231670170="" _nghost-ng-c2260559306="">
+                        <div _ngcontent-ng-c2260559306="" class="tabs-inner">
+                            <ion-router-outlet _ngcontent-ng-c2260559306="" tabs="true">
+                                <app-translate _nghost-ng-c86841954="" class="ion-page">
+                                    <app-translate-desktop _ngcontent-ng-c86841954="" _nghost-ng-c3105055519="">
+                                        <ion-header _ngcontent-ng-c3105055519="" s-mode="md" role="banner" class="md header-md header-translucent header-collapse-none header-translucent-md hydrated">
+                                            <!---->
+                                            <!--org-location for <ion-toolbar> (host=undefined)-->
+                                            <!--<slot> (host=ion-header)-->
+                                            <ion-toolbar _ngcontent-ng-c3105055519="" s-mode="md" class="sc-ion-toolbar-md-h toolbar-title-default md in-toolbar hydrated">
+                                                <!---->
+                                                <!--org-location for <ion-buttons> (host=undefined)-->
+                                                <!--org-location for <ion-title> (host=undefined)-->
+                                                <div class="toolbar-background sc-ion-toolbar-md"></div>
+                                                <div class="toolbar-container sc-ion-toolbar-md sc-ion-toolbar-md-s">
+                                                    <!--<slot name="start"> (host=ion-toolbar)-->
+                                                    <!--<slot name="secondary"> (host=ion-toolbar)-->
+                                                    <div class="toolbar-content sc-ion-toolbar-md sc-ion-toolbar-md-s">
+                                                        <!--<slot> (host=ion-toolbar)-->
+                                                        <ion-title _ngcontent-ng-c3105055519="" s-mode="md" class="sc-ion-title-md-h md title-default hydrated">
+                                                                <img src="http://47.109.88.233/wp-content/uploads/2024/02/众声logo-1-scaled-e1710248374969.jpg" alt="logo" id="logo">
+                                                        </ion-title>
+                                                    </div>
+                                                    <!--<slot name="primary"> (host=ion-toolbar)-->
+                                                    <div _ngcontent-ng-c3105055519="" slot="primary" s-mode="md" class="sc-ion-buttons-md-h sc-ion-buttons-md-s md hydrated">
+                                                        <!---->
+                                                        <div _ngcontent-ng-c3105055519="" user="sign" repo="translate" size="large" _nghost-ng-c1195078251="">
+                                                            <div _ngcontent-ng-c1195078251="" class="gh-large">
+                                                                <a _ngcontent-ng-c1195078251="" class="gh-btn" href="" target="_self" aria-label="Star on GitHub">
+                                                                    <svg _ngcontent-ng-c1195078251="" version="1.1" aria-hidden="true" class="gh-octicon" width="16" height="16" viewBox="0 0 16 16">
+                                                                    </svg>
+                                                                    <span _ngcontent-ng-c1195078251="">累计访客</span>
+                                                                </a>
+                                                                <ntkme-counter
+                                                                    _ngcontent-ng-c1195078251="" _nghost-ng-c2129951367=""><a _ngcontent-ng-c2129951367="" class="social-count gh-large" href="https://github.com/sign/translate/stargazers" aria-label="12 stargazers on GitHub"><span _ngcontent-ng-c2129951367="">16</span></a></ntkme-counter>
+                                                                    <!---->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<slot name="end"> (host=ion-toolbar)-->
+                                                </div>
+                                            </ion-toolbar>
+                                        </ion-header>
+                                        <ion-content _ngcontent-ng-c3105055519="" class="sc-ion-content-h md content-ltr sc-ion-content-s hydrated" style="--offset-top: -1px; --offset-bottom: -1px;">
+                                            <!---->
+                                            <!--org-location for <div> (host=undefined)-->
+                                            <div id="background-content" part="background" class="sc-ion-content"></div>
+                                            <main class="inner-scroll scroll-y sc-ion-content sc-ion-content-s" part="scroll">
+                                                <!--<slot> (host=ion-content)-->
+                                                <div _ngcontent-ng-c3105055519="" class="container">
+                                                    <div _ngcontent-ng-c3105055519="" id="input-mode-group">
+                                                        <app-translate-input-button _ngcontent-ng-c3105055519="" mode="text" icon="language" _nghost-ng-c2583486419="">
+                                                            <ion-button _ngcontent-ng-c2583486419="" color="primary" fill="outline" class="selected sc-ion-button-md-h ion-color ion-color-primary md button button-outline ion-activatable ion-focusable hydrated"
+                                                                s-mode="md">
+                                                                <!---->
+                                                                <!--org-location for <ion-icon> (host=undefined)-->
+                                                                <!--org-location for [  
+]--><button type="button" class="button-native sc-ion-button-md" part="native">
+    <span>文-手</span>
+    <!--<slot name="end"> (host=ion-button)--></span><ion-ripple-effect class="sc-ion-button-md sc-ion-ripple-effect-h md hydrated" role="presentation"><!----></ion-ripple-effect></button></ion-button>
+                                                        </app-translate-input-button>
+                                                        <!---->
+                                                        <!---->
+                                                        <!---->
+                                                    </div>
+                                                    <app-drop-pose-file _ngcontent-ng-c3105055519="" _nghost-ng-c963451058="" class="">
+                                                        <div _ngcontent-ng-c963451058="" appdropzone="">
+                                                            <div _ngcontent-ng-c3105055519="" id="translation-card">
+                                                                <app-language-selectors _ngcontent-ng-c3105055519="" _nghost-ng-c746492120="" class="spoken-to-signed">
+                                                                    <app-language-selector _ngcontent-ng-c746492120="" translationkey="signedLanguagesShort" _nghost-ng-c3692043147="">
+                                                                        <!---->
+                                                                        <div id="output">
+                                                                            手语翻译结果
+                                                                        </div>
+                                                                    </app-language-selector>
+                                                                    <ion-button _ngcontent-ng-c746492120="" id="swap-languages" fill="clear" expand="full" color="dark" class="mat-mdc-tooltip-trigger sc-ion-button-md-h ion-color ion-color-dark md button button-full button-clear ion-activatable ion-focusable hydrated"
+                                                                        s-mode="md">
+                                                                        <!---->
+                                                                        <!--org-location for <ion-icon> (host=undefined)-->
+                                                                        <div class="button-native sc-ion-button-md" part="native" aria-label="">
+                                                                            <img id="left-arrow" src="http://47.109.88.233/wp-content/uploads/2024/03/箭头_向右.png" alt="右">
+                                                                            <ion-ripple-effect class="sc-ion-button-md sc-ion-ripple-effect-h md hydrated" role="presentation">
+                                                                                <!---->
+                                                                            </ion-ripple-effect>
+                                                                        </div>
+                                                                    </ion-button>
+                                                                    <!---->
+                                                                    <app-language-selector _ngcontent-ng-c746492120="" translationkey="languages" _nghost-ng-c3692043147="">
+                                                                        <!---->
+                                                                        <div id="input">
+                                                            
+                                                                            输入视频源
+                                                                        </div>
+                                                                    </app-language-selector>
+                                                                </app-language-selectors>
+                                                                <div _ngcontent-ng-c3105055519="" id="content">
+                                                                    <app-spoken-to-signed _ngcontent-ng-c3105055519="" _nghost-ng-c349464442="">
+                                                                        <app-spoken-language-input _ngcontent-ng-c349464442="" _nghost-ng-c2151509834="" id="text-div">
+                                                                            <div _ngcontent-ng-c2151509834="" class="translation-text"><label _ngcontent-ng-c2151509834="" id="spoken-language-label"></label>
+                                                                                <div id="cameraContainer">
+                                                                                
+                                                                                </div>
+                                                                                <div id="buttonContainer">
+                                                                                    <span>
+                                                                                        <button id="cameraButton" class="button-with-dot">
+                                                                                            <span id="reddot" class="dot"></span>
+                                                                                        </button>
+                                                                                    </span>
+                                                                                    <span class="sndspan">
+                                                                                        <button id="uploadButton">
+                                                                                            <img id="upload-img" src="http://47.109.88.233/wp-content/uploads/2024/03/上传.png" alt="upload">
+                                                                                        </button>
+                                                                                        <input type="file" accept="video/*" id="fileInput">
+                                                                                    </span>
+                                                                                    <button id="recordButton">开始录制</button>
+                                                                                    <button id="postButton">
+                                                                                        <img id="post-img" src="http://47.109.88.233/wp-content/uploads/2024/03/发送.png" alt="post">
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!---->
+                                                                            <!---->
+                                                                            <!---->
+                                                                        </app-spoken-language-input>
+                                                                        <!-- <app-sign-writing _ngcontent-ng-c349464442="" _nghost-ng-c3735418134="">
+                                                                            <div _ngcontent-ng-c3735418134="" id="signs">
+                                                                            </div>
+                                                                        </app-sign-writing> -->
+                                                                        <app-signed-language-output _ngcontent-ng-c349464442="" _nghost-ng-c3528047752="">
+                                                                            <div id="outputdiv">
+                                                                                
+                                                                            </div>
+                                                                            <button id="soundButton">
+                                                                                <img src="http://47.109.88.233/wp-content/uploads/2024/03/声音-2.png" alt="soundimg" id="sound-img">
+                                                                            </button>
+                                                                        </app-signed-language-output>
+                                                                    </app-spoken-to-signed>
+                                                                    <!---->
+                                                                    <!---->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </app-drop-pose-file>
+                                                    <app-send-feedback _ngcontent-ng-c3105055519="" _nghost-ng-c1391420962=""><a _ngcontent-ng-c1391420962="" href="https://github.com/sign/translate/issues" target="_blank"> 
+</a></app-send-feedback>
+                                                </div>
+                                            </main>
+                                            <!--<slot name="fixed"> (host=ion-content)-->
+                                        </ion-content>
+                                    </app-translate-desktop>
+                                    <!---->
+                                    <!---->
+                                </app-translate>
+                            </ion-router-outlet>
+                            <!---->
+                        </div>
+                        
+                    </ion-tabs>
+                </app-main>
+            </ion-router-outlet>
+            <!---->
+        </ion-app>
+    </app-root>
+    <noscript>Please enable JavaScript to continue using this application.</noscript>
+    <script src="runtime.676b16a9b32d33f0.js" type="module"></script>
+    <script src="polyfills.e3205e3c9139efa5.js" type="module"></script>
+    <script src="main.c4ab4f98fe429e87.js" type="module"></script>
+    <script>
+        var cameraButton = document.getElementById('cameraButton');
+        var cameraContainer = document.querySelector('#cameraContainer');
+        var overimg = document.getElementById('overlayImage');
+        var videoElement;
+        var recordButton = document.getElementById('recordButton');
+        var recordedChunks = []; // 保存录制的视频块的数组
+        var mediaRecorder; // 媒体录制器对象
+        var isRecording = false; // 标记是否正在录制
+        var nowstream;
+        var starttime;
+        var endtime;
+        var videoUrl;
+        var recordElement;
+        var blob;
+        var sentence;
+        var soundurl;
+
+        var overlayImage = document.createElement('img');
+        overlayImage.src = 'http://47.109.88.233/wp-content/uploads/2024/03/record.png';
+        overlayImage.alt = 'Overlay Image';
+        overlayImage.style.position = 'absolute';
+        overlayImage.style.width = '120px';
+        overlayImage.style.height = '100px';
+        overlayImage.style.top = '10px';
+        overlayImage.style.left = '10px';
+        overlayImage.style.zIndex = '1';
+
+        var isBlinking = false;
+        var blinkInterval;
+
+        function startBlinking() {
+            isBlinking = true;
+            blinkInterval = setInterval(function() {
+                if (overlayImage.style.opacity === '1') {
+                overlayImage.style.opacity = '0';
+                } else {
+                overlayImage.style.opacity = '1';
+                }
+            }, 500);
+            }
+
+            function stopBlinking() {
+            isBlinking = false;
+            clearInterval(blinkInterval);
+            overlayImage.style.opacity = '1';
+            }
+            cameraButton.addEventListener('click', function() {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+            videoElement = document.createElement('video');
+            videoElement.srcObject = stream;
+            videoElement.autoplay = true;
+
+            nowstream = stream;
+            
+            // 清空父级div中的内容
+            cameraContainer.innerHTML = '';
+
+            // 将视频元素添加到父级div中
+            cameraContainer.appendChild(videoElement);
+            })
+            .catch(function(error) {
+            // 处理访问摄像头失败的情况
+            });
+            recordButton.style.display = 'inline-block';
+            recordedChunks = [];
+            mediaRecorder = null;
+            isRecording = false;
+            });
+        recordButton.addEventListener('click', function() {
+            if (!isRecording) {
+                // redSquare.style.width
+                mediaRecorder = new MediaRecorder(nowstream);
+                mediaRecorder.ondataavailable = function(e) {
+                recordedChunks.push(e.data);
+                };
+                mediaRecorder.start();
+                isRecording = true;
+                console.log(recordedChunks);
+                recordButton.textContent = '停止录制';
+                cameraContainer.appendChild(overlayImage);
+                if (!isBlinking) {
+                    startBlinking();
+                }
+            } else {
+                // 停止录制
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                mediaRecorder.onstop = function() {
+                    blob = new Blob(recordedChunks, { type: 'video/mp4' });
+                    // console.log(recordedChunks);
+                    videoUrl = URL.createObjectURL(blob);
+                    cameraContainer.removeChild(videoElement)
+                    recordElement = document.createElement('video');
+                    recordElement.src = videoUrl;
+                    recordElement.controls = true;
+                    cameraContainer.removeChild(overlayImage)
+                    cameraContainer.appendChild(recordElement);
+                    // 重置录制相关变量
+                    recordedChunks = [];
+                    mediaRecorder = null;
+                    isRecording = false;
+                    recordButton.textContent = '开始录制';
+                    recordButton.style.display = 'none';
+                    if (isBlinking) {
+                        stopBlinking();
+                    }
+                };
+                }
+            }
+            });
+            
+
+        const fileInput = document.getElementById('fileInput');
+        const customButton = document.getElementById('uploadButton');
+        var file;
+
+        customButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        let videoElement2;
+        
+        fileInput.addEventListener('change', () => {
+            file = fileInput.files[0];
+
+            while (cameraContainer.firstChild) {
+                // URL.revokeObjectURL(videoElement2.src);
+                cameraContainer.removeChild(cameraContainer.firstChild);
+            }
+
+            videoElement2 = document.createElement('video');
+            videoElement2.src = URL.createObjectURL(file);
+            videoElement2.controls = true;
+            
+            cameraContainer.innerHTML = '';
+            cameraContainer.appendChild(videoElement2);
+        });
+
+        const postButton = document.getElementById('postButton');
+        
+        var soundButton = document.getElementById('soundButton');
+
+        var outputDiv;
+        var audioElement;
+        postButton.addEventListener('click', () => {
+            if (fileInput.files[0]) {
+                file = fileInput.files[0];
+            }
+
+            if  (recordElement) {
+                file = blob;
+            }
+            console.log(file)
+            if (file) {
+                const formData = new FormData();
+                formData.append('video', file);
+
+                fetch('https://www.crowdofvoice.top:6006/translate/', {
+                    method: 'POST',
+                    body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+
+                            
+                        // 处理解析后的JSON数据
+                        const result = data['translation'];
+                        translation = result['translation'];
+                        // console.log(translation)
+                        var chineseMatches = translation.match(/[\u4e00-\u9fa5]+/g);
+                        // 将匹配到的中文部分组合成一个新的字符串
+                        var resultString = chineseMatches ? chineseMatches.join(",") : "";
+                        console.log(resultString);
+                        const modeljson = {
+                            "model": "chatglm3-6b",
+                            "messages": [
+                                {
+                                    "role": "system",
+                                    "content": "将下面一些词语连接成一句连续的话。尽量不要加入其它词语。尽量简单，表达清晰。"
+                                },
+                                {
+                                    "role": "user",
+                                    "content": resultString
+                                }
+
+                            ],
+                            "stream": false,
+                            "max_tokens": 100,
+                            "temperature": 0.8,
+                            "top_p": 0.9 
+                        }
+                        const chaturl = 'https://www.crowdofvoice.top:7861/v1/chat/completions'
+                        fetch(chaturl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(modeljson)
+                        })
+                        .then(response => response.json())
+                        .then(function(data) {
+                            sentence = data['choices'][0]['message']['content'];
+                            // sentence = "我们很高兴能够帮助你";
+                            outputDiv = document.getElementById('outputdiv');
+                            console.log(sentence);
+                            outputDiv.textContent = sentence;
+                            var raw = JSON.stringify({
+                                "usersound_id": 3,
+                                "text": sentence,
+                                "name": "jiezhou01"
+                                });
+
+                            var myHeaders = new Headers();
+                            myHeaders.append("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6Inp5aiIsImV4cCI6MTcxNDA0NDAyMiwiZW1haWwiOiIifQ.omSPzbVum1M0VmDanXiw4qyYv-IHMMDQmbzC0-uxG2s");
+                            myHeaders.append("User-Agent", "Apifox/1.0.0 (https://apifox.com)");
+                            myHeaders.append("Content-Type", "application/json");
+                            myHeaders.append("Accept", "*/*");
+                            myHeaders.append("Host", "www.crowdofvoice.top:6008");
+                            myHeaders.append("Connection", "keep-alive");
+
+                            var requestOptions = {
+                                method: 'POST',
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6Inp5aiIsImV4cCI6MTcxNDA0NDAyMiwiZW1haWwiOiIifQ.omSPzbVum1M0VmDanXiw4qyYv-IHMMDQmbzC0-uxG2s"
+                                },
+                                body: raw,
+                                redirect: 'follow'
+                                };
+                            soundButton.style.display = 'inline-block';
+
+                            fetch("https://www.crowdofvoice.top:6008/voice/", requestOptions)
+                            .then(response => response.json())
+                            .then(result => {
+                                soundurl = result['data'];
+                                console.log(soundurl);
+                                audioElement = document.createElement('audio');
+                                audioElement.src = soundurl;
+                                document.body.appendChild(audioElement);
+                            })
+                            // voice end
+                            .catch(error => console.log('error', error));
+                            
+
+
+                            // completion end
+                            })
+                        .catch(error => console.log('error', error));
+
+                    // traslate end
+                    });
+
+               
+                    soundButton.addEventListener('click', function() {
+                    audioElement.play()
+                });
+                }
+            });
+        
+    </script>
+    <link rel="preload" as="font" href="assets/fonts/roboto/Roboto-normal-400.ttf" crossorigin="anonymous">
+    <link rel="preload" as="font" href="assets/fonts/roboto/Roboto-normal-500.ttf" crossorigin="anonymous">
+    <link rel="preload" as="image" href="assets/flags/1x1/us.svg">
+
+    <div style="visibility: hidden;" class="cdk-describedby-message-container cdk-visually-hidden" platform="server">
+        <div id="cdk-describedby-message-ng-1-2" role="tooltip">Alpha</div>
+    </div>
+</body>
+<!-- Preload assets after body - Angular puts scripts at end of body -->
+
+</html>
